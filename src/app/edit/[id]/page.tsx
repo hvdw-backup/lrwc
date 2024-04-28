@@ -1,15 +1,70 @@
 "use client";
 import FormPost from "@/app/components/FormPost";
 import { FormInputPost } from "@/app/types";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import axios from "axios";
+import { useRouter } from "next/navigation";
+import { FunctionComponent } from "react";
 import { SubmitHandler } from "react-hook-form";
 
-const EditPostPage = () => {
-  const handleEditPost: SubmitHandler<FormInputPost> = (data) => {};
+interface EditPostPageProps {
+  params: {
+    id: string;
+  };
+}
+const EditPostPage: FunctionComponent<EditPostPageProps> = ({ params }) => {
+  const { id } = params;
+  const router = useRouter();
 
+  const { data: dataPost, isLoading: isLoadingPost } = useQuery({
+    queryKey: ["posts", id],
+    queryFn: async () => {
+      const response = await axios.get(`/api/posts/${id}`);
+      return response.data;
+    },
+  });
+
+  const { mutate: updatePost, isPending: isPendingSubmit } = useMutation({
+    mutationFn: (newPost: FormInputPost) => {
+      return axios.patch(`/api/posts/${id}`, newPost);
+    },
+    onError: (error) => {
+      console.error(error, "create post error");
+    },
+    onSuccess: () => {
+      router.push("/");
+      router.refresh();
+    },
+  });
+
+  const handleEditPost: SubmitHandler<FormInputPost> = (data) => {
+    updatePost(data);
+  };
+
+  if (isLoadingPost) {
+    return (
+      <div className="text-center">
+        <span className="loading loading-spinner loading-lg"></span>
+      </div>
+    );
+  }
   return (
     <div>
       <h1 className="text-2xl my-4 font-bold text-center">Edit Post</h1>
-      <FormPost submit={handleEditPost} isEditing />
+      {isLoadingPost ? (
+        <div className="text-center">
+          <span className="loading loading-spinner loading-lg"></span>
+        </div>
+      ) : (
+        <>
+          <FormPost
+            isPendingSubmit
+            submit={handleEditPost}
+            initialValue={dataPost}
+            isEditing
+          />
+        </>
+      )}
     </div>
   );
 };

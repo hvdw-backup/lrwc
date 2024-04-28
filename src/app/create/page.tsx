@@ -13,12 +13,12 @@ const CreatePage = () => {
     createPost(data);
   };
 
-  const { mutate: createPost } = useMutation({
+  const { mutate: createPost, isPending: isPendingSubmit } = useMutation({
     mutationFn: (newPost: FormInputPost) => {
       return axios.post("/api/posts/create", newPost);
     },
     onError: (error) => {
-      console.error(error, "hi create page error");
+      console.error(error, "create post error");
     },
     onSuccess: () => {
       router.push("/");
@@ -30,7 +30,7 @@ const CreatePage = () => {
     <div>
       <BackButton />
       <h1 className="text-2xl my-4 font-bold text-center">Add new post</h1>
-      <FormPost submit={handleCreatePost} />
+      <FormPost isPendingSubmit submit={handleCreatePost} />
     </div>
   );
 };

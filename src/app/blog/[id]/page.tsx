@@ -38,7 +38,7 @@ const BlogDetailPage: FunctionComponent<BlogDetailPageProps> = async ({
       </div>
       <p className="text-slate-700">{post?.content}</p>
       <span className="badge badge neutral">{post?.tag.name}</span>
-      <ButtonAction />
+      <ButtonAction id={params.id} />
     </div>
   );
 };
