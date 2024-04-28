@@ -24,7 +24,7 @@ const EditPostPage: FunctionComponent<EditPostPageProps> = ({ params }) => {
     },
   });
 
-  const { mutate: updatePost, isPending: isPendingSubmit } = useMutation({
+  const { mutate: updatePost, isPending } = useMutation({
     mutationFn: (newPost: FormInputPost) => {
       return axios.patch(`/api/posts/${id}`, newPost);
     },
@@ -51,7 +51,7 @@ const EditPostPage: FunctionComponent<EditPostPageProps> = ({ params }) => {
       ) : (
         <>
           <Form
-            isPendingSubmit
+            isPendingSubmit={isPending}
             submit={handleEditPost}
             initialValue={dataPost}
             isEdit

@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 const BackButton = () => {
   const router = useRouter();
   return (
-    <button onClick={() => router.back()} className="btn">
+    <button onClick={() => router.back()} className="btn btn-primary">
       <ChevronLeft />
       Back
     </button>

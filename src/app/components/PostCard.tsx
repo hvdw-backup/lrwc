@@ -20,7 +20,7 @@ const PostCard: FunctionComponent<PostCardProps> = ({ post }) => {
   const [isTruncated, setIsTruncated] = useState(true);
 
   return (
-    <div className="card w-100 bg-base-100 shadow-sm border my-10">
+    <div className="card w-100 bg-base-300 shadow-sm my-10">
       <div className="card-body">
         <h2 className="card-title">{title}</h2>
         <p>{isTruncated ? content.slice(0, MAX_CONTENT_LENGTH) : content}</p>

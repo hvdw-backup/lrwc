@@ -34,12 +34,12 @@ const Form: FunctionComponent<FormPostProps> = ({
         {...register("title", { required: true })}
         type="text"
         placeholder="Message title"
-        className="input input-bordered w-full"
+        className="input w-full bg-base-200"
       />
 
       <textarea
         {...register("content", { required: true })}
-        className="textarea textarea-lg textarea-bordered w-full h-40"
+        className="textarea textarea-lg  bg-base-200 w-full h-40"
         placeholder="Message body"
       ></textarea>
 

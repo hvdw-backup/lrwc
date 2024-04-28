@@ -22,6 +22,26 @@ const config: Config = {
       },
     },
   },
+  daisyui: {
+    themes: [
+      {
+        dim: {
+          ...require("daisyui/src/theming/themes")["dim"],
+          // old // primary: "#00965f",
+          primary: "#57ae81",
+          error: "#a5304a",
+          "base-content": "#e8f4ec",
+          // lightest
+          "base-100": "#2a303c",
+          // medium
+          "base-200": "#3e444f",
+          // darkest
+          "base-300": "#545963",
+          // "base-100": "#e8f4ec",
+        },
+      },
+    ],
+  },
   plugins: [require("daisyui")],
 };
 export default config;
