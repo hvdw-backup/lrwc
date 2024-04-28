@@ -10,7 +10,6 @@ import { useRouter } from "next/navigation";
 const CreatePage = () => {
   const router = useRouter();
   const handleCreatePost: SubmitHandler<FormInputPost> = (data) => {
-    console.log(data, "hellooo");
     createPost(data);
   };
 
@@ -19,7 +18,7 @@ const CreatePage = () => {
       return axios.post("/api/posts/create", newPost);
     },
     onError: (error) => {
-      console.error(error);
+      console.error(error, "hi create page error");
     },
     onSuccess: () => {
       router.push("/");

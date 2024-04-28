@@ -21,7 +21,6 @@ const getPosts = async () => {
 export default async function Home() {
   // COMING FROM THE SERVER
   const posts = await getPosts();
-  console.log(posts, "posts");
 
   return (
     <main className="grid item-center justify-center md:grid-cols-2 lg:grid-cols-3 gap-4 mt-10">

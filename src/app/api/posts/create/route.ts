@@ -11,11 +11,10 @@ export async function POST(request: Request) {
         tagId: body.tagId,
       },
     });
-    console.log(post, "posting");
     return NextResponse.json(post, { status: 200 });
   } catch (error) {
     return NextResponse.json(
-      { message: "Could not create post" },
+      { message: error + "create post api error" },
       { status: 500 }
     );
   }

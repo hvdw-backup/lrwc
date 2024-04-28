@@ -4,9 +4,7 @@ import { FormInputPost } from "@/app/types";
 import { SubmitHandler } from "react-hook-form";
 
 const EditPostPage = () => {
-  const handleEditPost: SubmitHandler<FormInputPost> = (data) => {
-    console.log(data);
-  };
+  const handleEditPost: SubmitHandler<FormInputPost> = (data) => {};
 
   return (
     <div>

@@ -1,10 +1,10 @@
 "use client";
-import { SubmitHandler, useForm } from "react-hook-form";
-import { FormInputPost } from "../types";
 import { FunctionComponent } from "react";
-import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
+import { useQuery } from "@tanstack/react-query";
 import { Tag } from "@prisma/client";
+import { FormInputPost } from "../types";
+import { SubmitHandler, useForm } from "react-hook-form";
 
 interface FormPostProps {
   submit: SubmitHandler<FormInputPost>;
@@ -23,32 +23,30 @@ const FormPost: FunctionComponent<FormPostProps> = ({ submit, isEditing }) => {
     },
   });
 
-  console.log("hi", dataTags);
-
   return (
     <form
       onSubmit={handleSubmit(submit)}
       className="flex flex-col items-center justify-center gap-5 mt-10"
     >
       <input
-        {...(register("title"), { required: true })}
+        {...register("title", { required: true })}
         type="text"
         placeholder="Post title..."
         className="input input-bordered w-full max-w-lg"
       />
 
       <textarea
-        {...(register("content"), { required: true })}
+        {...register("content", { required: true })}
         className="textarea textarea-bordered w-full max-w-lg"
         placeholder="Post content..."
       ></textarea>
 
-      {/* {isLoadingTags ? (
+      {isLoadingTags ? (
         // TODO: could get loading ring from lucide
         "loading..."
       ) : (
         <select
-          {...(register("tagId"), { required: true })}
+          {...register("tagId", { required: true })}
           className="select select-bordered w-full max-w-lg"
           defaultValue={""}
         >
@@ -61,7 +59,7 @@ const FormPost: FunctionComponent<FormPostProps> = ({ submit, isEditing }) => {
             </option>
           ))}
         </select>
-      )} */}
+      )}
 
       <button type="submit" className="btn btn-primary w-full max-w-lg">
         {isEditing ? "Update" : "Create"}
