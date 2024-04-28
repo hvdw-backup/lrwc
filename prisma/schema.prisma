@@ -20,4 +20,14 @@ model Post {
   content   String   @db.VarChar(1000)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  Reply     Reply[]
+}
+
+model Reply {
+  id        String   @id @default(cuid())
+  content   String   @db.VarChar(1000)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  Post      Post?    @relation(fields: [postId], references: [id])
+  postId    String?
 }

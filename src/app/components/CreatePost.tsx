@@ -3,7 +3,7 @@ import { FunctionComponent } from "react";
 import axios from "axios";
 import { useMutation } from "@tanstack/react-query";
 import { FormInputPost } from "../types";
-import { SubmitHandler, useForm } from "react-hook-form";
+import { SubmitHandler } from "react-hook-form";
 import Form from "./Form";
 import { useRouter } from "next/navigation";
 

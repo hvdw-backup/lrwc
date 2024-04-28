@@ -7,6 +7,7 @@ const getPosts = async () => {
       id: true,
       title: true,
       content: true,
+      Reply: true,
     },
     orderBy: {
       createdAt: "desc",
@@ -16,14 +17,29 @@ const getPosts = async () => {
   return response;
 };
 
+const getReplies = async () => {
+  const response = await db.reply.findMany({
+    select: {
+      id: true,
+      content: true,
+    },
+    orderBy: {
+      createdAt: "asc",
+    },
+  });
+
+  return response;
+};
+
 const PostsContainer = async () => {
   // COMING FROM THE SERVER
   const posts = await getPosts();
+  const replies = await getReplies();
+
   return (
     <section>
-      {" "}
       {posts.map((post) => (
-        <PostCard key={post.id} post={post} />
+        <PostCard key={post.id} post={post} replies={replies} />
       ))}
     </section>
   );
