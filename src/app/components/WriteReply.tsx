@@ -1,37 +1,26 @@
-import { FunctionComponent, useEffect } from "react";
+import { FunctionComponent, useEffect, useMemo } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { FormInputPost, FormInputReply } from "../types";
+import { FormInputReply } from "../types";
 import { useRouter } from "next/navigation";
 import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
 
-interface WriteReplyProps {
-  submit?: SubmitHandler<FormInputPost>;
-  isEdit?: boolean;
-  initialValue?: FormInputPost;
-  isPendingSubmit?: boolean;
+interface FormInputReplyProps {
+  parentPostId: string;
 }
 
-const WriteReply: FunctionComponent<WriteReplyProps> = ({
-  submit,
-  isEdit,
-  initialValue,
-  isPendingSubmit,
+const WriteReply: FunctionComponent<FormInputReplyProps> = ({
+  parentPostId,
 }) => {
   const router = useRouter();
 
-  const initialVlaues = {
-    title: "",
-    content: "",
-  };
-
   const handleCreateReply: SubmitHandler<FormInputReply> = (data) => {
-    createReply(data);
+    createReply({ ...data, postId: parentPostId });
   };
 
   const { mutate: createReply, isPending } = useMutation({
-    mutationFn: (newPost: FormInputReply) => {
-      return axios.post("/api/replies/create", newPost);
+    mutationFn: (newReply: FormInputReply) => {
+      return axios.post("/api/replies/create", newReply);
     },
     onError: (error) => {
       console.error(error, "create replies error");
@@ -41,15 +30,14 @@ const WriteReply: FunctionComponent<WriteReplyProps> = ({
     },
   });
 
-  const { register, handleSubmit, reset, formState } = useForm<FormInputPost>({
-    defaultValues: initialValue,
-  });
+  const { register, handleSubmit, reset, formState } =
+    useForm<FormInputReply>();
 
   useEffect(() => {
     if (formState.isSubmitSuccessful) {
       reset();
     }
-  }, [formState, reset, initialValue]);
+  }, [formState, reset]);
 
   return (
     <form
@@ -59,7 +47,7 @@ const WriteReply: FunctionComponent<WriteReplyProps> = ({
       <textarea
         {...register("content", { required: true })}
         className="textarea textarea-md bg-base-200 w-3/4 h-40"
-        placeholder="Message body"
+        placeholder="Write a reply..."
       ></textarea>
       <button type="submit" className="btn btn-primary w-40">
         {isPending ? (

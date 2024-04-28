@@ -22,6 +22,7 @@ const getReplies = async () => {
     select: {
       id: true,
       content: true,
+      postId: true,
     },
     orderBy: {
       createdAt: "asc",

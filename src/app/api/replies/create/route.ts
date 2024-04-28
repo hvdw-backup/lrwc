@@ -7,6 +7,7 @@ export async function POST(request: Request) {
     const post = await db.reply.create({
       data: {
         content: body.content,
+        postId: body.postId,
       },
     });
     return NextResponse.json(post, { status: 200 });

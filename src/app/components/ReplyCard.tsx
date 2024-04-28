@@ -1,13 +1,15 @@
 "use client";
 import { FunctionComponent, useState } from "react";
+import ButtonAction from "./ButtonAction";
 
 interface ReplyCardProps {
+  id: string;
   content: string;
 }
 
 const MAX_CONTENT_LENGTH = 300;
 
-const ReplyCard: FunctionComponent<ReplyCardProps> = ({ content }) => {
+const ReplyCard: FunctionComponent<ReplyCardProps> = ({ id, content }) => {
   const shouldTruncate = content.length > MAX_CONTENT_LENGTH;
   const [isTruncated, setIsTruncated] = useState(true);
 
@@ -23,6 +25,7 @@ const ReplyCard: FunctionComponent<ReplyCardProps> = ({ content }) => {
             {isTruncated ? "Show more" : "Show less"}
           </button>
         )}
+        <ButtonAction id={id} path="replies" />
       </div>
     </div>
   );

@@ -1,8 +1,10 @@
 "use client";
+import BackButton from "@/app/components/BackButton";
 import Form from "@/app/components/Form";
 import { FormInputPost } from "@/app/types";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import axios from "axios";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { FunctionComponent } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
@@ -43,6 +45,7 @@ const EditPostPage: FunctionComponent<EditPostPageProps> = ({ params }) => {
 
   return (
     <div>
+      <BackButton />
       <h1 className="text-2xl my-4 font-bold text-center">Edit Post</h1>
       {isLoadingPost ? (
         <div className="text-center">

@@ -14,6 +14,7 @@ interface PostCardProps {
   replies?: {
     id: string;
     content: string;
+    postId: string;
   }[];
 }
 
@@ -23,6 +24,8 @@ const PostCard: FunctionComponent<PostCardProps> = ({ post, replies }) => {
   const { id, title, content } = post;
   const shouldTruncate = content.length > MAX_CONTENT_LENGTH;
   const [isTruncated, setIsTruncated] = useState(true);
+
+  const filteredReplies = replies?.filter((reply) => reply.postId === post.id);
 
   return (
     <div className="card w-100 bg-base-300 my-10">
@@ -43,12 +46,17 @@ const PostCard: FunctionComponent<PostCardProps> = ({ post, replies }) => {
             Edit
           </Link> */}
         </div>
-        <ButtonAction id={id} className="justify-end inline-flex" />
+        <ButtonAction
+          id={id}
+          className="justify-end inline-flex"
+          path="posts"
+        />
       </div>
-      {replies?.map((reply) => (
-        <ReplyCard key={reply.id} content={reply.content} />
+
+      {filteredReplies?.map((reply) => (
+        <ReplyCard key={reply.id} content={reply.content} id={reply.id} />
       ))}
-      <WriteReply />
+      <WriteReply parentPostId={id} />
     </div>
   );
 };

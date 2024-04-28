@@ -5,4 +5,5 @@ export type FormInputPost = {
 
 export type FormInputReply = {
   content: string;
+  postId: string;
 };
