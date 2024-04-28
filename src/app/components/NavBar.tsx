@@ -11,8 +11,8 @@ const Navbar = () => {
           </Link>
         </div>
         <div className="flex-none">
-          <Link href={"/create"} className="btn btn-ghost">
-            Create post
+          <Link href={"/message-board"} className="btn btn-ghost">
+            Message Board
           </Link>
         </div>
       </div>

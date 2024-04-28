@@ -1,11 +1,11 @@
 "use client";
-import FormPost from "@/app/components/FormPost";
+import Form from "@/app/components/Form";
 import { FormInputPost } from "@/app/types";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { FunctionComponent } from "react";
-import { SubmitHandler } from "react-hook-form";
+import { SubmitHandler, useForm } from "react-hook-form";
 
 interface EditPostPageProps {
   params: {
@@ -32,7 +32,7 @@ const EditPostPage: FunctionComponent<EditPostPageProps> = ({ params }) => {
       console.error(error, "create post error");
     },
     onSuccess: () => {
-      router.push("/");
+      router.push("/message-board");
       router.refresh();
     },
   });
@@ -41,13 +41,6 @@ const EditPostPage: FunctionComponent<EditPostPageProps> = ({ params }) => {
     updatePost(data);
   };
 
-  if (isLoadingPost) {
-    return (
-      <div className="text-center">
-        <span className="loading loading-spinner loading-lg"></span>
-      </div>
-    );
-  }
   return (
     <div>
       <h1 className="text-2xl my-4 font-bold text-center">Edit Post</h1>
@@ -57,11 +50,11 @@ const EditPostPage: FunctionComponent<EditPostPageProps> = ({ params }) => {
         </div>
       ) : (
         <>
-          <FormPost
+          <Form
             isPendingSubmit
             submit={handleEditPost}
             initialValue={dataPost}
-            isEditing
+            isEdit
           />
         </>
       )}

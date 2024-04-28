@@ -4,13 +4,16 @@ import axios from "axios";
 import { Pencil, Trash2 } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { FunctionComponent } from "react";
+import { FunctionComponent, HTMLAttributes } from "react";
 
-interface ButtonActionProps {
+interface ButtonActionProps extends HTMLAttributes<HTMLDivElement> {
   id: string;
 }
 
-const ButtonAction: FunctionComponent<ButtonActionProps> = ({ id }) => {
+const ButtonAction: FunctionComponent<ButtonActionProps> = ({
+  id,
+  ...props
+}) => {
   const router = useRouter();
 
   const { mutate: deletePost, isPending } = useMutation({
@@ -21,12 +24,11 @@ const ButtonAction: FunctionComponent<ButtonActionProps> = ({ id }) => {
       console.error(error, "delete post error");
     },
     onSuccess: () => {
-      router.push("/");
       router.refresh();
     },
   });
   return (
-    <div>
+    <div {...props}>
       <Link href={`/edit/${id}`} className="btn mr-2">
         <Pencil />
         Edit

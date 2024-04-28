@@ -8,7 +8,6 @@ interface ContextProps {
 }
 
 export async function DELETE(request: Request, context: ContextProps) {
-  console.log(context, "context");
   try {
     const { params } = context;
     await db.post.delete({
