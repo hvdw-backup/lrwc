@@ -54,7 +54,7 @@ const WriteReply: FunctionComponent<WriteReplyProps> = ({
   return (
     <form
       onSubmit={handleSubmit(handleCreateReply)}
-      className="flex flex-col items-end gap-5 m-5"
+      className="flex flex-col items-end gap-5 m-5 mr-10"
     >
       <textarea
         {...register("content", { required: true })}

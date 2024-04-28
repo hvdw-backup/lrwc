@@ -12,19 +12,17 @@ const ReplyCard: FunctionComponent<ReplyCardProps> = ({ content }) => {
   const [isTruncated, setIsTruncated] = useState(true);
 
   return (
-    <div className="card w-100 bg-base-300 border shadow-sm my-5 mx-10">
-      <div className="card-body">
-        <p>{isTruncated ? content.slice(0, MAX_CONTENT_LENGTH) : content}</p>
-        <div className="card-actions justify-end">
-          {shouldTruncate && (
-            <button
-              onClick={() => setIsTruncated(!isTruncated)}
-              className="hover:underline"
-            >
-              {isTruncated ? "Show more" : "Show less"}
-            </button>
-          )}
-        </div>
+    <div className="card w-100 bg-base-300 border my-3 mx-10 card-body p-4">
+      <p>{isTruncated ? content.slice(0, MAX_CONTENT_LENGTH) : content}</p>
+      <div className="card-actions justify-end">
+        {shouldTruncate && (
+          <button
+            onClick={() => setIsTruncated(!isTruncated)}
+            className="hover:underline"
+          >
+            {isTruncated ? "Show more" : "Show less"}
+          </button>
+        )}
       </div>
     </div>
   );
