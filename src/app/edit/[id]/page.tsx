@@ -29,7 +29,7 @@ const EditPostPage: FunctionComponent<EditPostPageProps> = ({ params }) => {
       return axios.patch(`/api/posts/${id}`, newPost);
     },
     onError: (error) => {
-      console.error(error, "create post error");
+      console.error(error, "edit post error");
     },
     onSuccess: () => {
       router.push("/message-board");

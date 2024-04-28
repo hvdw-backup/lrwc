@@ -1,5 +1,4 @@
 "use client";
-import { Tag } from "@prisma/client";
 import { FunctionComponent, useState } from "react";
 import ButtonAction from "./ButtonAction";
 
@@ -8,14 +7,13 @@ interface PostCardProps {
     id: string;
     title: string;
     content: string;
-    tag: Tag;
   };
 }
 
 const MAX_CONTENT_LENGTH = 300;
 
 const PostCard: FunctionComponent<PostCardProps> = ({ post }) => {
-  const { id, title, content, tag } = post;
+  const { id, title, content } = post;
   const shouldTruncate = content.length > MAX_CONTENT_LENGTH;
   const [isTruncated, setIsTruncated] = useState(true);
 
@@ -25,8 +23,6 @@ const PostCard: FunctionComponent<PostCardProps> = ({ post }) => {
         <h2 className="card-title">{title}</h2>
         <p>{isTruncated ? content.slice(0, MAX_CONTENT_LENGTH) : content}</p>
         <div className="card-actions justify-end">
-          <span className="badge badge neutral">{tag.name}</span>
-
           {shouldTruncate && (
             <button
               onClick={() => setIsTruncated(!isTruncated)}

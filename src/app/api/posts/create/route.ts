@@ -8,8 +8,6 @@ export async function POST(request: Request) {
       data: {
         title: body.title,
         content: body.content,
-        // TODO:
-        tagId: "clvjeftbu0000phyefe5kwp7d",
       },
     });
     return NextResponse.json(post, { status: 200 });

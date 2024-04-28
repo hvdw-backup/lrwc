@@ -13,7 +13,6 @@ const CreatePost: FunctionComponent = () => {
   const initialVlaues = {
     title: "",
     content: "",
-    tagId: "",
   };
 
   const handleCreatePost: SubmitHandler<FormInputPost> = (data) => {

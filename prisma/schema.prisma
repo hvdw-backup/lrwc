@@ -14,18 +14,10 @@ datasource db {
   directUrl = env("POSTGRES_URL_NON_POOLING")
 }
 
-model Tag {
-  id   String @id @default(cuid())
-  name String @db.VarChar(100)
-  Post Post[]
-}
-
 model Post {
   id        String   @id @default(cuid())
   title     String   @db.VarChar(225)
   content   String   @db.VarChar(1000)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  tagId     String
-  tag       Tag      @relation(fields: [tagId], references: [id])
 }

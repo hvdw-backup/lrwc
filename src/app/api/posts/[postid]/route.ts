@@ -34,7 +34,6 @@ export async function PATCH(request: Request, context: ContextProps) {
         id: params.postid,
       },
       data: {
-        tagId: body.tagId,
         title: body.title,
         content: body.content,
       },
@@ -57,9 +56,6 @@ export async function GET(request: Request, context: ContextProps) {
     const post = await db.post.findFirst({
       where: {
         id: params.postid,
-      },
-      include: {
-        tag: true,
       },
     });
     return NextResponse.json(post, { status: 200 });
