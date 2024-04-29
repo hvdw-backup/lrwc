@@ -1,4 +1,4 @@
-import { FunctionComponent, useEffect, useMemo } from "react";
+import { FunctionComponent, useEffect, useMemo, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { FormInputReply } from "../types";
 import { useRouter } from "next/navigation";
@@ -12,6 +12,7 @@ interface FormInputReplyProps {
 const WriteReply: FunctionComponent<FormInputReplyProps> = ({
   parentPostId,
 }) => {
+  const [isReplying, setIsReplying] = useState(false);
   const router = useRouter();
 
   const handleCreateReply: SubmitHandler<FormInputReply> = (data) => {
@@ -44,18 +45,30 @@ const WriteReply: FunctionComponent<FormInputReplyProps> = ({
       onSubmit={handleSubmit(handleCreateReply)}
       className="flex flex-col items-end gap-5 m-5 mr-10"
     >
-      <textarea
-        {...register("content", { required: true })}
-        className="textarea textarea-md bg-base-200 w-3/4 h-40"
-        placeholder="Write a reply..."
-      ></textarea>
-      <button type="submit" className="btn btn-primary w-40">
-        {isPending ? (
-          <span className="loading loading-spinner"></span>
-        ) : (
-          "Reply"
-        )}
-      </button>
+      {isReplying ? (
+        <>
+          <textarea
+            {...register("content", { required: true })}
+            className="textarea textarea-md bg-base-200 w-3/4 h-40"
+            placeholder="Write a reply..."
+          ></textarea>
+          <button type="submit" className="btn btn-primary w-40">
+            {isPending ? (
+              <span className="loading loading-spinner"></span>
+            ) : (
+              "Reply"
+            )}
+          </button>
+        </>
+      ) : (
+        <button
+          type="button"
+          onClick={() => setIsReplying(!isReplying)}
+          className="btn btn-primary w-40"
+        >
+          Write a reply
+        </button>
+      )}
     </form>
   );
 };
