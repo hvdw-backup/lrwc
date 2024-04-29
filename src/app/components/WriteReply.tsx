@@ -43,13 +43,13 @@ const WriteReply: FunctionComponent<FormInputReplyProps> = ({
   return (
     <form
       onSubmit={handleSubmit(handleCreateReply)}
-      className="flex flex-col items-end gap-5 m-5 mr-10"
+      className="flex flex-col items-end gap-5 mb-5 ml-20 mr-10"
     >
       {isReplying ? (
         <>
           <textarea
             {...register("content", { required: true })}
-            className="textarea textarea-md bg-base-200 w-3/4 h-40"
+            className="textarea textarea-md bg-base-200 w-full h-40"
             placeholder="Write a reply..."
           ></textarea>
           <button type="submit" className="btn btn-primary w-40">

@@ -2,14 +2,14 @@ import { FunctionComponent, useEffect } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { FormInputPost } from "../types";
 
-interface FormPostProps {
+interface PostFormProps {
   submit: SubmitHandler<FormInputPost>;
   isEdit?: boolean;
   initialValue?: FormInputPost;
   isPendingSubmit?: boolean;
 }
 
-const Form: FunctionComponent<FormPostProps> = ({
+const PostForm: FunctionComponent<PostFormProps> = ({
   submit,
   isEdit,
   initialValue,
@@ -56,4 +56,4 @@ const Form: FunctionComponent<FormPostProps> = ({
   );
 };
 
-export default Form;
+export default PostForm;

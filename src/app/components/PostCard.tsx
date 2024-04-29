@@ -36,7 +36,7 @@ const PostCard: FunctionComponent<PostCardProps> = ({ post, replies }) => {
           {shouldTruncate && (
             <button
               onClick={() => setIsTruncated(!isTruncated)}
-              className="hover:underline"
+              className="hover:underline mr-3 self-end"
             >
               {isTruncated ? "Show more" : "Show less"}
             </button>

@@ -4,7 +4,7 @@ import axios from "axios";
 import { useMutation } from "@tanstack/react-query";
 import { FormInputPost } from "../types";
 import { SubmitHandler } from "react-hook-form";
-import Form from "./Form";
+import PostForm from "./PostForm";
 import { useRouter } from "next/navigation";
 
 const CreatePost: FunctionComponent = () => {
@@ -32,7 +32,7 @@ const CreatePost: FunctionComponent = () => {
   });
 
   return (
-    <Form
+    <PostForm
       submit={handleCreatePost}
       isPendingSubmit={isPending}
       initialValue={initialVlaues}

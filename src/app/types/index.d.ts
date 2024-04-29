@@ -7,3 +7,9 @@ export type FormInputReply = {
   content: string;
   postId: string;
 };
+
+export type FormNewUser = {
+  email: string;
+  username: string;
+  password: string;
+};
