@@ -47,9 +47,10 @@ const PostCard: FunctionComponent<PostCardProps> = ({ post, replies }) => {
           </Link> */}
         </div>
         <ButtonAction
-          id={id}
+          postId={id}
           className="justify-end inline-flex"
           path="posts"
+          hasReplies={filteredReplies && filteredReplies.length > 0}
         />
       </div>
 

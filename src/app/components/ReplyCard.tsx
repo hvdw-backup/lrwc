@@ -25,7 +25,7 @@ const ReplyCard: FunctionComponent<ReplyCardProps> = ({ id, content }) => {
             {isTruncated ? "Show more" : "Show less"}
           </button>
         )}
-        <ButtonAction id={id} path="replies" />
+        <ButtonAction postId={id} path="replies" />
       </div>
     </div>
   );

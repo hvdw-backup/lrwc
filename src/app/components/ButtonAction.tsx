@@ -2,25 +2,26 @@
 import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
 import { Pencil, Trash2 } from "lucide-react";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { FunctionComponent, HTMLAttributes } from "react";
 
 interface ButtonActionProps extends HTMLAttributes<HTMLDivElement> {
-  id: string;
+  postId: string;
   path: "posts" | "replies";
+  hasReplies?: boolean;
 }
 
 const ButtonAction: FunctionComponent<ButtonActionProps> = ({
-  id,
+  postId,
   path,
+  hasReplies,
   ...props
 }) => {
   const router = useRouter();
 
   const { mutate: deleteItem, isPending } = useMutation({
     mutationFn: async () => {
-      const apiPath = `/api/${path}/${id}`;
+      const apiPath = `/api/${path}/${postId}`;
       return axios.delete(apiPath);
     },
     onError: (error) => {
@@ -32,24 +33,19 @@ const ButtonAction: FunctionComponent<ButtonActionProps> = ({
   });
   return (
     <div {...props}>
-      {/* TODO: hmm */}
-      <Link href={`/edit/${id}`} className="btn mr-2">
-        <Pencil />
-        Edit
-      </Link>
-      <button onClick={() => deleteItem()} className="btn btn-error">
-        {isPending ? (
-          <>
-            <span className="loading loading-spinner"></span>
-            Deleting...
-          </>
-        ) : (
-          <>
-            <Trash2 />
-            Delete
-          </>
-        )}
-      </button>
+      {!hasReplies && (
+        <button onClick={() => deleteItem()} className="btn btn-error">
+          {isPending ? (
+            <>
+              <span className="loading loading-spinner"></span>
+            </>
+          ) : (
+            <>
+              <Trash2 />
+            </>
+          )}
+        </button>
+      )}
     </div>
   );
 };
