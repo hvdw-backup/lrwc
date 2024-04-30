@@ -2,11 +2,25 @@ import { FunctionComponent, useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { FormNewUser } from "../types";
 import { Eye, EyeOff } from "lucide-react";
+import { unstable_noStore as noStore } from "next/cache";
+import { db } from "../lib/db";
 
 interface NewUserFormProps {
   submit: SubmitHandler<FormNewUser>;
   isPendingSubmit: boolean;
 }
+
+// const getApprovedUsers = async () => {
+//   noStore();
+//   const response = await db.approvedUsers?.findMany({
+//     select: {
+//       id: true,
+//       email: true,
+//     },
+//   });
+
+//   return response;
+// };
 
 const NewUserForm: FunctionComponent<NewUserFormProps> = ({
   submit,
@@ -14,6 +28,7 @@ const NewUserForm: FunctionComponent<NewUserFormProps> = ({
 }) => {
   const [isPasswordRevealed, setIsPasswordRevealed] = useState(false);
   const { register, handleSubmit, reset, formState } = useForm<FormNewUser>();
+  // const users = await getApprovedUsers();
 
   useEffect(() => {
     if (formState.isSubmitSuccessful) {

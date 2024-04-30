@@ -1,15 +1,36 @@
 "use client";
 import { SubmitHandler } from "react-hook-form";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import { useRouter } from "next/navigation";
 import { FormNewUser } from "../types";
 import NewUserForm from "../components/NewUserForm";
+import { db } from "../lib/db";
+import { useRouter } from "next/navigation";
+import { getApprovedUsers } from "../lib/getApprovedUsers";
+import { useState } from "react";
 
 const NewUserPage = () => {
   const router = useRouter();
+  const [error, setError] = useState<null | Error>(null);
+
+  const query = useQuery({
+    queryKey: ["approvedUsers"],
+    queryFn: () => getApprovedUsers(),
+  });
+
   const handleCreateUser: SubmitHandler<FormNewUser> = (data) => {
-    createuser(data);
+    const matchingEmailsUsers = query.data?.filter(
+      (user) => user.email === data.email
+    );
+    console.log(matchingEmailsUsers, "matchingEmailsUsers");
+    console.log(query.data, "query.data");
+
+    const isUserRegistered =
+      matchingEmailsUsers && matchingEmailsUsers.length > 0;
+
+    isUserRegistered
+      ? createuser(data)
+      : setError(new Error("This email is not registered"));
   };
 
   const { mutate: createuser, isPending: isPendingSubmit } = useMutation({
@@ -18,6 +39,7 @@ const NewUserPage = () => {
     },
     onError: (error) => {
       console.error(error, "create user error");
+      setError(new Error(error.name + error.message));
     },
     onSuccess: () => {
       router.push("/");
@@ -34,6 +56,7 @@ const NewUserPage = () => {
         submit={handleCreateUser}
         isPendingSubmit={isPendingSubmit}
       />
+      {error && <h1>ERROR</h1>}
     </div>
   );
 };

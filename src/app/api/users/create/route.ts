@@ -11,6 +11,15 @@ export async function POST(request: Request) {
         password: body.password,
       },
     });
+
+    await db.approvedUsers.update({
+      where: {
+        email: body.email,
+      },
+      data: {
+        redeemed: true,
+      },
+    });
     return NextResponse.json(user, { status: 200 });
   } catch (error) {
     return NextResponse.json(
