@@ -19,7 +19,6 @@ model Post {
   title     String   @db.VarChar(225)
   content   String   @db.VarChar(1000)
   createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
   Reply     Reply[]
   User      User     @relation(fields: [userId], references: [id])
   userId    String
@@ -41,7 +40,13 @@ model User {
   username String  @unique @db.VarChar(50)
   email    String  @unique @db.VarChar(50)
   password String  @db.Text
-  // About    String  @db.VarChar(1000)
+  About    String? @default("") @db.VarChar(1000)
   Post     Post[]
   Reply    Reply[]
+}
+
+model ApprovedUsers {
+  id       String  @id @default(cuid())
+  email    String  @unique @db.VarChar(50)
+  redeemed Boolean @default(false)
 }

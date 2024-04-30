@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import { FormNewUser } from "../types";
 import NewUserForm from "../components/NewUserForm";
 
-const CreatePage = () => {
+const NewUserPage = () => {
   const router = useRouter();
   const handleCreateUser: SubmitHandler<FormNewUser> = (data) => {
     createuser(data);
@@ -14,7 +14,6 @@ const CreatePage = () => {
 
   const { mutate: createuser, isPending: isPendingSubmit } = useMutation({
     mutationFn: (newUser: FormNewUser) => {
-      console.log(newUser, "newUser");
       return axios.post("/api/users/create", newUser);
     },
     onError: (error) => {
@@ -39,4 +38,4 @@ const CreatePage = () => {
   );
 };
 
-export default CreatePage;
+export default NewUserPage;

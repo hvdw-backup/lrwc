@@ -13,3 +13,9 @@ export type FormNewUser = {
   username: string;
   password: string;
 };
+
+export type FormApprovedUser = {
+  email: string;
+  username: string;
+  password: string;
+};
