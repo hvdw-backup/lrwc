@@ -19,3 +19,9 @@ export type FormApprovedUser = {
   username: string;
   password: string;
 };
+
+export type ApprovedUsers = {
+  id: string;
+  email: string;
+  redeemed: boolean;
+};

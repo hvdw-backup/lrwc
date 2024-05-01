@@ -7,6 +7,7 @@ export const getApprovedUsers = async () => {
     select: {
       id: true,
       email: true,
+      redeemed: true,
     },
   });
 
