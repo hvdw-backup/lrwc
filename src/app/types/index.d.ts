@@ -20,6 +20,11 @@ export type FormApprovedUser = {
   password: string;
 };
 
+export type FormSignIn = {
+  username: string;
+  password: string;
+};
+
 export type ApprovedUsers = {
   id: string;
   email: string;
