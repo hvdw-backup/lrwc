@@ -14,6 +14,7 @@ export const getUser = async (username: string) => {
     },
     select: {
       id: true,
+      username: true,
       email: true,
       password: true,
     },
@@ -32,7 +33,7 @@ export const { auth, signIn, signOut } = NextAuth({
         const { username, password } = credentials;
         const user = await getUser(username as string);
 
-        console.log("user", user);
+        // console.log("username, password:", username, password);
 
         if (!user) return null;
 

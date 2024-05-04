@@ -1,8 +1,14 @@
+"use server";
+
 import { AuthError } from "next-auth";
 import { signIn } from "../../../auth";
 import { FormSignIn } from "../types";
 
-export async function authenticate(formData: FormSignIn) {
+export async function authenticate(
+  // formData: FormSignIn,
+  prevState: string | undefined,
+  formData: FormData
+) {
   try {
     await signIn("credentials", formData);
   } catch (error) {

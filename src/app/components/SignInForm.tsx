@@ -1,45 +1,51 @@
 "use client";
-import { FunctionComponent, useState } from "react";
-import { useForm } from "react-hook-form";
-import { FormSignIn } from "../types";
+import { FunctionComponent } from "react";
 import { authenticate } from "../lib/actions";
+import { useFormState, useFormStatus } from "react-dom";
 
 const SignInForm: FunctionComponent = () => {
-  const [isPasswordRevealed, setIsPasswordRevealed] = useState(false);
-
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<FormSignIn>();
+  const [errorMessage, dispatch] = useFormState(authenticate, undefined);
 
   return (
     <form
-      onSubmit={handleSubmit(authenticate)}
+      action={dispatch}
       className="flex flex-col items-center gap-5 mt-5 w-1/2"
     >
       <input
-        {...register("username", { required: true })}
         type="text"
+        id="username"
+        name="username"
         placeholder="Enter your username"
         className="input w-full bg-base-200"
       />
       <div className="flex w-full">
         <input
-          {...register("password", { required: true })}
-          type={isPasswordRevealed ? "text" : "password"}
+          id="password"
+          type="password"
+          name="password"
           placeholder="Enter your password"
           className="input w-full bg-base-200"
         />
       </div>
-      <button type="submit" className="btn btn-primary self-end w-40">
-        Sign up
-      </button>
+      <LoginButton />
 
-      <h1>Username errors: {errors.username?.message}</h1>
-      <h1>Password errors: {errors.password?.message}</h1>
+      {errorMessage && <h1>Errors: {errorMessage}</h1>}
     </form>
   );
 };
+
+function LoginButton() {
+  const { pending } = useFormStatus();
+
+  return (
+    <button
+      type="submit"
+      aria-disabled={pending}
+      className="btn btn-primary self-end w-40"
+    >
+      Sign In
+    </button>
+  );
+}
 
 export default SignInForm;
