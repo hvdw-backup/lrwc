@@ -6,7 +6,7 @@ const NewUserPage = async () => {
 
   return (
     <div className="flex flex-col items-center">
-      <h1 className="text-2xl my-4 font-bold text-center">
+      <h1 className="text-3xl my-10 font-bold text-center">
         Sign up to the LRWC forum
       </h1>
       <NewUserForm approvedUsers={approvedUsers} />
