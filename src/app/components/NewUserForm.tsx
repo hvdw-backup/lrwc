@@ -60,8 +60,7 @@ const NewUserForm: FunctionComponent<NewUserFormProps> = ({
       setError(new Error(error.name + error.message));
     },
     onSuccess: () => {
-      router.push("/");
-      router.refresh();
+      router.push("/sign-in");
     },
   });
 

@@ -1,27 +1,34 @@
 import type { NextAuthConfig } from "next-auth";
-import Credentials from "next-auth/providers/credentials";
 // https://nextjs.org/learn/dashboard-app/adding-authentication
 
 export const authConfig = {
   pages: {
     signIn: "/sign-in",
+    signOut: "/",
   },
   callbacks: {
     authorized({ auth, request: { nextUrl } }) {
-      console.log(auth, "auth");
-      console.log("hi");
-
       const isLoggedIn = !!auth?.user;
+      // protected paths
       const isOnMessageboard = nextUrl.pathname === "/message-board";
-      console.log("isOnMessageboard", isOnMessageboard);
+      const isOnApprovedUsers = nextUrl.pathname === "/approve-user";
+      // logged out users only
+      const isOnSignIn = nextUrl.pathname === "/sign-in";
+      const isOnSignUp = nextUrl.pathname === "/sign-up";
 
-      if (isOnMessageboard) {
-        if (isLoggedIn) return true;
-        return false; // Redirect unauthenticated users to login page
-      } else if (isLoggedIn) {
-        return Response.redirect(new URL("/message-board", nextUrl));
+      if (isLoggedIn) {
+        if (isOnSignIn || isOnSignUp) {
+          return Response.redirect(new URL("/message-board", nextUrl));
+        }
+        return true;
       }
-      return true;
+
+      if (!isLoggedIn) {
+        if (isOnMessageboard || isOnApprovedUsers) {
+          return false;
+        }
+        return true;
+      }
     },
   },
   // redirect({}) {
