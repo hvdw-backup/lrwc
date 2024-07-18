@@ -8,7 +8,7 @@ const ApprovedUserPage = () => {
         Add users to the forum
       </h1>
       <h2 className="text-xl my-4 text-center">
-        Adding an email address to the form means the person <br />
+        Adding an email address to the form means the PERSON <br />
         with this email will be able to join the LRWC forum
       </h2>
       <ApprovedUserForm />
