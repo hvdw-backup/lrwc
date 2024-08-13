@@ -1,5 +1,4 @@
 import SignInForm from "../components/SignInForm";
-import SignOutButton from "../components/SignOutButton";
 
 const NewUserPage = async () => {
   return (

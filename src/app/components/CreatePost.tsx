@@ -10,7 +10,7 @@ import { useRouter } from "next/navigation";
 const CreatePost: FunctionComponent = () => {
   const router = useRouter();
 
-  const initialVlaues = {
+  const initialValues = {
     title: "",
     content: "",
   };
@@ -35,7 +35,7 @@ const CreatePost: FunctionComponent = () => {
     <PostForm
       submit={handleCreatePost}
       isPendingSubmit={isPending}
-      initialValue={initialVlaues}
+      initialValue={initialValues}
     />
   );
 };

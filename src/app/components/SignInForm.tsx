@@ -1,14 +1,14 @@
 "use client";
 import { FunctionComponent } from "react";
-import { authenticate } from "../lib/actions";
+// import { authenticate } from "../lib/actions";
 import { useFormState, useFormStatus } from "react-dom";
 
 const SignInForm: FunctionComponent = () => {
-  const [errorMessage, dispatch] = useFormState(authenticate, undefined);
+  // const [errorMessage, dispatch] = useFormState(authenticate, undefined);
 
   return (
     <form
-      action={dispatch}
+      // action={dispatch}
       className="flex flex-col items-center gap-5 mt-5 w-1/2"
     >
       <input
@@ -29,7 +29,7 @@ const SignInForm: FunctionComponent = () => {
       </div>
       <LoginButton />
 
-      {errorMessage && <h1>Errors: {errorMessage}</h1>}
+      {/* {errorMessage && <h1>Errors: {errorMessage}</h1>} */}
     </form>
   );
 };

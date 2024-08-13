@@ -1,11 +1,11 @@
-import { signOut } from "../../../auth";
+// import { signOut } from "../../../auth";
 
 const SignOutButton = () => {
   return (
     <form
       action={async () => {
         "use server";
-        await signOut();
+        // await signOut();
       }}
     >
       <button className="btn btn-primary">Sign out</button>
