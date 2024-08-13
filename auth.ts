@@ -1,37 +1,30 @@
 import NextAuth from "next-auth";
 import { authConfig } from "./auth.config";
 // https://authjs.dev/getting-started/providers/credentials - should switch to google or something
-import Credentials from "next-auth/providers/credentials";
-import { unstable_noStore as noStore } from "next/cache";
-import { db } from "@/app/lib/db";
+import CredentialsProvider from "next-auth/providers/credentials";
 import bcrypt from "bcryptjs";
-
-export const getUser = async (username: string) => {
-  noStore();
-  const response = await db.user?.findUnique({
-    where: {
-      username: username,
-    },
-    select: {
-      id: true,
-      username: true,
-      email: true,
-      password: true,
-    },
-  });
-
-  return response;
-};
+import { getUserForSignIn } from "@/app/lib/getUserForSignIn";
+import Credentials from "next-auth/providers/credentials";
 
 export const { auth, signIn, signOut } = NextAuth({
   ...authConfig,
   providers: [
-    Credentials({
+    CredentialsProvider({
+      name: "credentials",
+      credentials: {
+        username: { label: "Username", placeholder: "Enter username" },
+        password: { label: "Password", placeholder: "Password" },
+      },
       async authorize(credentials) {
-        // should check credentials on submitting sign in form
+        console.log(credentials, "crendentials first");
+        if (!credentials || !credentials.username || !credentials.password)
+          return null;
 
         const { username, password } = credentials;
-        const user = await getUser(username as string);
+        console.log(credentials, "credentials");
+
+        const user = await getUserForSignIn(username as string);
+        console.log(user, "user log in");
 
         if (!user) return null;
 
@@ -43,7 +36,6 @@ export const { auth, signIn, signOut } = NextAuth({
         if (passwordsMatch) return user;
 
         console.log("Invalid credentials");
-
         return null;
       },
     }),

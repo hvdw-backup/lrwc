@@ -1,5 +1,12 @@
-import type { NextAuthConfig } from "next-auth";
+// import type {NextAuthConfig} from "next-auth";
 // https://nextjs.org/learn/dashboard-app/adding-authentication
+// import bcrypt from "bcryptjs";
+
+import { AuthOptions } from "next-auth";
+
+// import { getUserForSignIn } from "@/app/lib/getUserForSignIn";
+// import Credentials from "next-auth/providers/credentials";
+// import { NextAuthOptions } from "next-auth";
 
 export const authConfig = {
   pages: {
@@ -7,8 +14,10 @@ export const authConfig = {
     signOut: "/",
   },
   callbacks: {
-    authorized({ auth, request: { nextUrl } }) {
+    authorized({ auth, request: { nextUrl } }: any) {
+      console.log(auth, "auth");
       const isLoggedIn = !!auth?.user;
+      console.log(isLoggedIn, "islogged in");
       // protected paths
       const isOnMessageboard = nextUrl.pathname === "/message-board";
       const isOnApprovedUsers = nextUrl.pathname === "/approve-user";
@@ -31,8 +40,22 @@ export const authConfig = {
       }
     },
   },
+  // async jwt({ token, user }: any) {
+  //   if (user) {
+  //     token.username = user.username;
+  //     token.id = user.id;
+  //   }
+
+  //   return token;
+  // },
+  // async session({ session, token, user }: any) {
+  //   session.user.username = token.username;
+
+  //   return session;
+  // },
+  // secret: process.env.NEXTAUTH_SECRET,
   // redirect({}) {
   //   return "message-board";
   // },
   providers: [], // Add providers with an empty array for now
-} satisfies NextAuthConfig;
+} satisfies AuthOptions;
