@@ -1,0 +1,69 @@
+import NextAuth, { NextAuthConfig } from "next-auth";
+// import { authConfig } from "./auth.config";
+// https://authjs.dev/getting-started/providers/credentials - should switch to google or something
+import Credentials from "next-auth/providers/credentials";
+import { unstable_noStore as noStore } from "next/cache";
+import { db } from "@/app/lib/db";
+import bcrypt from "bcryptjs";
+import Resend from "next-auth/providers/resend";
+import { PrismaAdapter } from "@auth/prisma-adapter";
+import { prisma } from "../prisma/prisma";
+
+// export const getUser = async (username: string) => {
+//   noStore();
+//   const response = await db.user?.findUnique({
+//     where: {
+//       username: username,
+//     },
+//     select: {
+//       id: true,
+//       username: true,
+//       email: true,
+//       password: true,
+//     },
+//   });
+
+//   return response;
+// };
+
+export const { handlers, auth } = NextAuth({
+  adapter: PrismaAdapter(prisma),
+  providers: [
+    Resend({
+      from: "onboarding@resend.dev",
+    }),
+  ],
+  session: {
+    strategy: "jwt",
+    // One month in seconds
+    maxAge: 2629746,
+  },
+  debug: process.env.NODE_ENV === "development",
+} satisfies NextAuthConfig);
+
+// export const { auth, signIn, signOut } = NextAuth({
+//   ...authConfig,
+//   providers: [
+//     Credentials({
+//       async authorize(credentials) {
+//         // should check credentials on submitting sign in form
+
+//         const { username, password } = credentials;
+//         const user = await getUser(username as string);
+
+//         if (!user) return null;
+
+//         const passwordsMatch = await bcrypt.compare(
+//           password as string,
+//           user.password
+//         );
+
+//         if (passwordsMatch) return user;
+
+//         console.log("Invalid credentials");
+
+//         return null;
+//       },
+//     }),
+//   ],
+// });
