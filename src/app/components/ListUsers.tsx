@@ -1,6 +1,6 @@
 import { FunctionComponent } from "react";
-import { db } from "../lib/db";
 import { unstable_noStore as noStore } from "next/cache";
+import { db } from "../../../prisma/db";
 
 const getApprovedUsers = async () => {
   noStore();

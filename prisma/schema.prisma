@@ -35,16 +35,6 @@ model Reply {
   userId    String?
 }
 
-// model User {
-//   id       String  @id @default(cuid())
-//   username String  @unique @db.VarChar(50)
-//   email    String  @unique @db.VarChar(50)
-//   password String  @db.Text
-//   About    String? @default("") @db.VarChar(1000)
-//   Post     Post[]
-//   Reply    Reply[]
-// }
-
 model ApprovedUsers {
   id       String  @id @default(cuid())
   email    String  @unique @db.VarChar(50)
@@ -104,3 +94,15 @@ model VerificationToken {
 
   @@id([identifier, token])
 }
+
+// old user password
+
+// model User {
+//   id       String  @id @default(cuid())
+//   username String  @unique @db.VarChar(50)
+//   email    String  @unique @db.VarChar(50)
+//   password String  @db.Text
+//   About    String? @default("") @db.VarChar(1000)
+//   Post     Post[]
+//   Reply    Reply[]
+// }

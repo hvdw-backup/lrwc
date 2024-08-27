@@ -1,4 +1,4 @@
-import { db } from "../lib/db";
+import { db } from "../../../prisma/db";
 import PostCard from "./PostCard";
 import { unstable_noStore as noStore } from "next/cache";
 
