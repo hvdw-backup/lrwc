@@ -22,7 +22,6 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       if (user) {
         token.id = user.id;
         token.username = user.username;
-        token.redeemed = !!user.redeemed;
         token.about = user.about;
       }
 
@@ -31,7 +30,6 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     async session({ session, token, user }: any) {
       session.user.id = token.id;
       session.user.username = token.username;
-      session.user.redeemed = token.redeemed;
       session.user.about = token.about;
 
       return session;

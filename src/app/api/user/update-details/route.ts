@@ -4,13 +4,14 @@ import { db } from "../../../../../prisma/db";
 export async function POST(request: Request) {
   try {
     const body = await request.json();
+    console.log(body, "body");
     const user = await db.user.update({
       where: {
         email: body.email,
       },
       data: {
-        redeemed: true,
         username: body.username,
+        about: body.about,
       },
     });
     return NextResponse.json(user, { status: 200 });

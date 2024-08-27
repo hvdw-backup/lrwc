@@ -1,22 +1,28 @@
 export type FormInputPost = {
   title: string;
   content: string;
+  userId: string;
 };
 
 export type FormInputReply = {
   content: string;
   postId: string;
+  userId: string;
+};
+
+export type FormApprovedUser = {
+  email: string;
 };
 
 export type ApprovedUsers = {
   id: string;
   email: string;
-  redeemed: boolean;
+  redeemed;
 };
 
 export type User = {
   id: string;
-  username: string | null;
   email: string;
-  redeemed: boolean;
+  username: string | null;
+  about: string | null;
 };

@@ -18,6 +18,12 @@ export default async function Home() {
           here
         </Link>
       </h2>
+      <h2 className="text-3xl text-center mb-20">
+        New members can sign up{" "}
+        <Link href={"/sign-up"} className="link link-primary">
+          here
+        </Link>
+      </h2>
     </main>
   );
 }

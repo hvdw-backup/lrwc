@@ -1,10 +1,10 @@
 "use client";
-import { FunctionComponent, useEffect, useState } from "react";
+import { FunctionComponent, useEffect } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { FormApprovedUser, FormNewUser } from "../types";
 import { useRouter } from "next/navigation";
 import axios from "axios";
 import { useMutation } from "@tanstack/react-query";
+import { FormApprovedUser } from "../types";
 
 const ApprovedUserForm: FunctionComponent = () => {
   const router = useRouter();

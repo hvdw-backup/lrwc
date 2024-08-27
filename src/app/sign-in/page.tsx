@@ -2,7 +2,7 @@ import { auth } from "@/auth";
 import SignInForm from "../components/SignInForm";
 import { redirect } from "next/navigation";
 
-const NewUserPage = async () => {
+const SignInPage = async () => {
   const session = await auth();
 
   if (session) redirect("/message-board");
@@ -19,4 +19,4 @@ const NewUserPage = async () => {
   }
 };
 
-export default NewUserPage;
+export default SignInPage;

@@ -9,7 +9,6 @@ export async function POST(request: Request) {
         email: body.email,
       },
       data: {
-        redeemed: true,
         username: body.username,
       },
     });

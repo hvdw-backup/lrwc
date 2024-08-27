@@ -4,17 +4,15 @@ import { db } from "../../../../../prisma/db";
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    const post = await db.reply.create({
+    const user = await db.approvedUsers.create({
       data: {
-        content: body.content,
-        postId: body.postId,
-        userId: body.userId,
+        email: body.email,
       },
     });
-    return NextResponse.json(post, { status: 200 });
+    return NextResponse.json(user, { status: 200 });
   } catch (error) {
     return NextResponse.json(
-      { message: error + "create reply api error" },
+      { message: error + "create approved user api error" },
       { status: 500 }
     );
   }

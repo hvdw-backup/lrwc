@@ -8,6 +8,7 @@ export async function POST(request: Request) {
       data: {
         title: body.title,
         content: body.content,
+        userId: body.userId,
       },
     });
     return NextResponse.json(post, { status: 200 });

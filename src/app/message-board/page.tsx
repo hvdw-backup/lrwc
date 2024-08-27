@@ -3,17 +3,13 @@ import BackButton from "../components/BackButton";
 import PostsContainer from "../components/PostsContainer";
 import { auth } from "@/auth";
 import { redirect } from "next/navigation";
-import RegisterUserDetails from "../components/RegisterUserDetails";
+import UpdateUserDetailsContainer from "../components/UpdateUserDetailsContainer";
+import { useSession } from "next-auth/react";
 
 const MessageBoard = async () => {
   const session = await auth();
 
   if (!session) redirect("/");
-
-  //@ts-ignore - need to find out how to update the expected Session types
-  if (session.user?.username === "lovely") {
-    return <RegisterUserDetails email={session.user?.email} />;
-  }
 
   if (session) {
     return (
@@ -24,9 +20,8 @@ const MessageBoard = async () => {
         </h1>
         {/* <FormPost isPendingSubmit submit={handleCreatePost} /> */}
 
-        <h1>user: {JSON.stringify(session)}</h1>
-        <CreatePost />
-        <PostsContainer />
+        <CreatePost user={session.user} />
+        <PostsContainer author={session.user} />
       </main>
     );
   }

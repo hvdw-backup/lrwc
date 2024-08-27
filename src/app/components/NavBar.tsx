@@ -12,6 +12,10 @@ const Navbar = () => {
           </Link>
         </div>
         <div className="flex">
+          {/* TODO: update user details */}
+          {/* <Link href={"/update-user-details"} className="btn btn-ghost">
+            Update your details
+          </Link> */}
           <Link href={"/message-board"} className="btn btn-ghost">
             Message Board
           </Link>

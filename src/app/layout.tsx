@@ -5,6 +5,7 @@ import Navbar from "./components/NavBar";
 import Providers from "./components/Providers";
 import { auth } from "@/auth";
 import { AuthProvider } from "./components/AuthProvider";
+import { useSession } from "next-auth/react";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -15,10 +16,12 @@ export const metadata: Metadata = {
 
 export default async function RootLayout({
   children,
+  session,
 }: Readonly<{
   children: React.ReactNode;
+  session: any;
 }>) {
-  const session = await auth();
+  // const session = await useSession();
 
   return (
     <html lang="en" data-theme="dim">

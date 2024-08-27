@@ -1,29 +1,22 @@
 import { FunctionComponent } from "react";
 import { User } from "../types";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { getApprovedUsers } from "../lib/getApprovedUsers";
 
-interface RegisterUserFormProps {
-  email: string | null | undefined;
+interface UpdateUserDetailsFormProps {
+  user: User;
   handleRegisterUserDetails: SubmitHandler<User>;
   isEdit?: boolean;
   isPendingSubmit?: boolean;
 }
 
-const RegisterUserDetailsForm: FunctionComponent<RegisterUserFormProps> = ({
-  email,
-  handleRegisterUserDetails,
-  isEdit,
-  isPendingSubmit,
-}) => {
-  // TODO: for checking whether username is already registered
-  // const approvedUsers = await getApprovedUsers();
-
+const UpdateUserDetailsForm: FunctionComponent<
+  UpdateUserDetailsFormProps
+> = async ({ user, handleRegisterUserDetails, isEdit, isPendingSubmit }) => {
   const { register, handleSubmit, reset, formState } = useForm<User>({
     defaultValues: {
-      username: "",
-      //@ts-ignore
-      email: email,
+      email: user.email,
+      username: user.username || "",
+      about: user.about || "",
     },
   });
 
@@ -35,16 +28,23 @@ const RegisterUserDetailsForm: FunctionComponent<RegisterUserFormProps> = ({
       <input
         {...register("email", { required: true })}
         type="text"
-        placeholder={email || "test"}
-        value={email || "test"}
+        placeholder={user.email}
+        value={user.email}
         className="input w-full bg-base-200"
         disabled
       />
       <input
-        {...register("username", { required: true })}
+        {...register("username")}
         type="text"
-        placeholder="Choose your username"
+        placeholder={user.username || "Choose your username"}
+        // value={username || ""}
         className="input w-full bg-base-200"
+      />
+      <textarea
+        {...register("about")}
+        placeholder={user.about || "Tell us a little something about yourself"}
+        // value={about || ""}
+        className="textarea textarea-lg bg-base-200 w-full h-60"
       />
       {/* {error && <h1>{error.message}</h1>} */}
       <button
@@ -52,11 +52,11 @@ const RegisterUserDetailsForm: FunctionComponent<RegisterUserFormProps> = ({
         className="btn btn-primary self-end w-40"
         // disabled={formState.isValid}
       >
-        Register username
+        Update
       </button>
     </form>
     // TODO: can add image and description etc
   );
 };
 
-export default RegisterUserDetailsForm;
+export default UpdateUserDetailsForm;
