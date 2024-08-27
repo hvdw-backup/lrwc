@@ -1,5 +1,5 @@
-import { db } from "@/app/lib/db";
 import { NextResponse } from "next/server";
+import { db } from "../../../../../prisma/db";
 
 interface ContextProps {
   params: {
