@@ -8,25 +8,15 @@ export type FormInputReply = {
   postId: string;
 };
 
-export type FormNewUser = {
-  email: string;
-  username: string;
-  password: string;
-};
-
-export type FormApprovedUser = {
-  email: string;
-  username: string;
-  password: string;
-};
-
-export type FormSignIn = {
-  username: string;
-  password: string;
-};
-
 export type ApprovedUsers = {
   id: string;
+  email: string;
+  redeemed: boolean;
+};
+
+export type User = {
+  id: string;
+  username: string | null;
   email: string;
   redeemed: boolean;
 };

@@ -4,20 +4,13 @@ import { db } from "../../../../../prisma/db";
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    const user = await db.user.create({
-      data: {
-        email: body.email,
-        username: body.username,
-        password: body.password,
-      },
-    });
-
-    await db.approvedUsers.update({
+    const user = await db.user.update({
       where: {
         email: body.email,
       },
       data: {
         redeemed: true,
+        username: body.username,
       },
     });
     return NextResponse.json(user, { status: 200 });

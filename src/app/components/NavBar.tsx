@@ -1,7 +1,6 @@
 import { BookX } from "lucide-react";
 import Link from "next/link";
 import SignOutButton from "./SignOutButton";
-import { auth } from "../../../auth";
 
 const Navbar = () => {
   return (
