@@ -8,6 +8,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
   providers: [
     // customise the sign in email : https://authjs.dev/getting-started/providers/resend#customization
     Resend({
+      apiKey: process.env.AUTH_RESEND_KEY,
       from: "onboarding@resend.dev",
     }),
   ],
