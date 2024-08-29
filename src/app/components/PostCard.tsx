@@ -1,9 +1,10 @@
 "use client";
-import { BaseSyntheticEvent, FunctionComponent, useState } from "react";
+import { FunctionComponent, useState } from "react";
 import ButtonAction from "./ButtonAction";
 import WriteReply from "./WriteReply";
-import { FormInputPost, User } from "../types";
+import { User } from "../types";
 import ReplyCard from "./ReplyCard";
+import { isReadyToRead, normaliseTime } from "../lib/getReadTime";
 
 interface PostCardProps {
   post: {
@@ -11,12 +12,14 @@ interface PostCardProps {
     title: string;
     content: string;
     userId: string | null;
+    readTime: string;
   };
   replies?: {
     id: string;
     content: string;
     postId: string;
     userId: string;
+    readTime: string;
   }[];
   users?: User[];
   author: User;
@@ -30,52 +33,69 @@ const PostCard: FunctionComponent<PostCardProps> = ({
   users,
   author,
 }) => {
-  const { id, title, content } = post;
+  const { id, title, content, readTime } = post;
   const shouldTruncate = content.length > MAX_CONTENT_LENGTH;
   const [isTruncated, setIsTruncated] = useState(true);
 
   const filteredReplies = replies?.filter((reply) => reply.postId === post.id);
   const filteredUser = users?.find((user) => user.id === post.userId);
 
-  return (
-    <div className="card w-100 bg-base-300 my-10">
-      <div className="card-body">
-        <h2 className="card-title">{title + " by " + filteredUser?.email}</h2>
-        <p>{isTruncated ? content.slice(0, MAX_CONTENT_LENGTH) : content}</p>
-        <div className="card-actions justify-end">
-          {shouldTruncate && (
-            <button
-              onClick={() => setIsTruncated(!isTruncated)}
-              className="hover:underline mr-3 self-end"
-            >
-              {isTruncated ? "Show more" : "Show less"}
-            </button>
-          )}
+  console.log(readTime, "posttime");
 
-          {/* <Link href={`/edit-post/${id}`} className="hover:underline">
-            Edit
-          </Link> */}
+  if (isReadyToRead(readTime)) {
+    return (
+      <div className="card w-100 bg-base-300 my-10">
+        <div className="card-body">
+          <h2 className="card-title">{title + " by " + filteredUser?.email}</h2>
+          <p>{isTruncated ? content.slice(0, MAX_CONTENT_LENGTH) : content}</p>
+          <div className="card-actions justify-end">
+            {shouldTruncate && (
+              <button
+                onClick={() => setIsTruncated(!isTruncated)}
+                className="hover:underline mr-3 self-end"
+              >
+                {isTruncated ? "Show more" : "Show less"}
+              </button>
+            )}
+
+            {/* <Link href={`/edit-post/${id}`} className="hover:underline">
+              Edit
+            </Link> */}
+          </div>
+          <ButtonAction
+            postId={id}
+            className="justify-end inline-flex"
+            path="posts"
+            hasReplies={filteredReplies && filteredReplies.length > 0}
+          />
         </div>
-        <ButtonAction
-          postId={id}
-          className="justify-end inline-flex"
-          path="posts"
-          hasReplies={filteredReplies && filteredReplies.length > 0}
-        />
-      </div>
 
-      {filteredReplies?.map((reply) => (
-        <ReplyCard
-          key={reply.id}
-          content={reply.content}
-          id={reply.id}
-          replyUserId={reply.userId}
-          users={users}
-        />
-      ))}
-      <WriteReply parentPostId={id} userId={author?.id} />
-    </div>
-  );
+        {filteredReplies?.map((reply) => (
+          <ReplyCard
+            key={reply.id}
+            content={reply.content}
+            id={reply.id}
+            replyUserId={reply.userId}
+            users={users}
+            readTime={reply.readTime}
+          />
+        ))}
+        <WriteReply parentPostId={id} userId={author?.id} />
+      </div>
+    );
+  }
+
+  if (!isReadyToRead(readTime)) {
+    return (
+      <div className="card w-100 bg-base-300 my-10">
+        <div className="card-body">
+          <h2 className="card-title">
+            You can read this post in: {normaliseTime(readTime)} hours
+          </h2>
+        </div>
+      </div>
+    );
+  }
 };
 
 export default PostCard;

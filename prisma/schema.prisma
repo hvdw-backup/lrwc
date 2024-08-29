@@ -25,6 +25,7 @@ model Post {
   title     String   @db.VarChar(225)
   content   String   @db.VarChar(1000)
   createdAt DateTime @default(now())
+  readTime  String   @default("0")
   Reply     Reply[]
   User      User?    @relation(fields: [userId], references: [id])
   userId    String?
@@ -35,6 +36,7 @@ model Reply {
   content   String   @db.VarChar(1000)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  readTime  String   @default("0")
   Post      Post     @relation(fields: [postId], references: [id])
   postId    String
   User      User?    @relation(fields: [userId], references: [id])

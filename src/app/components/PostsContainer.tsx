@@ -26,6 +26,7 @@ const getPosts = async () => {
       title: true,
       content: true,
       userId: true,
+      readTime: true,
     },
     orderBy: {
       createdAt: "desc",
@@ -43,6 +44,7 @@ const getReplies = async () => {
       content: true,
       postId: true,
       userId: true,
+      readTime: true,
     },
     orderBy: {
       createdAt: "asc",
