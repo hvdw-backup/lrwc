@@ -1,3 +1,5 @@
+// TODO: make it so things are revealed on the hour
+
 //4 days in ms
 const UPPER_LIMIT = 345600000;
 const ONE_HOUR_IN_MS = 3600000;
