@@ -19,8 +19,9 @@ const MessageBoard = async () => {
           LRWC Message Board
         </h1>
         {/* <FormPost isPendingSubmit submit={handleCreatePost} /> */}
-
+        {/* @ts-ignore */}
         <CreatePost user={session.user} />
+        {/* @ts-ignore */}
         <PostsContainer author={session.user} />
       </main>
     );

@@ -15,7 +15,7 @@ const SignInForm: FunctionComponent = async () => {
         className="input w-full bg-base-200"
       />
       <div className="flex w-full">
-        You'll receive an email with a link to access the message board
+        You`&apos;`ll receive an email with a link to access the message board
       </div>
       <button type="submit" className="btn btn-primary self-end w-40">
         Sign In

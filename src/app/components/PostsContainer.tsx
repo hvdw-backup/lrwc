@@ -69,6 +69,7 @@ const PostsContainer: FunctionComponent<PostsContainerProps> = async ({
         <PostCard
           key={post.id}
           post={post}
+          //@ts-ignore
           replies={replies}
           users={users}
           author={author}
