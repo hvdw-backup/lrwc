@@ -1,18 +1,5 @@
 import { FunctionComponent } from "react";
-import { unstable_noStore as noStore } from "next/cache";
-import { db } from "../../../prisma/db";
-
-const getApprovedUsers = async () => {
-  noStore();
-  const response = await db.approvedUsers?.findMany({
-    select: {
-      id: true,
-      email: true,
-    },
-  });
-
-  return response;
-};
+import { getApprovedUsers } from "../lib/getUsers";
 
 const ListUsers: FunctionComponent = async () => {
   const users = await getApprovedUsers();
