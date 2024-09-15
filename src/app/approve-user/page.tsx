@@ -2,6 +2,7 @@ import { auth } from "@/auth";
 import ApprovedUserForm from "../components/ApprovedUserForm";
 import ListUsers from "../components/ListUsers";
 import { redirect } from "next/navigation";
+import { getApprovedUsers } from "../lib/userActions";
 
 const ApprovedUserPage = async () => {
   const session = await auth();
@@ -9,6 +10,9 @@ const ApprovedUserPage = async () => {
   if (!session) redirect("/");
 
   if (session) {
+    const users = await getApprovedUsers();
+    const isAdmin = session.user?.email === "hannahvdw@duck.com";
+
     return (
       <div className="flex flex-col items-center">
         <h1 className="text-2xl my-4 font-bold text-center">
@@ -19,7 +23,7 @@ const ApprovedUserPage = async () => {
           with this email will be able to join the LRWC forum
         </h2>
         <ApprovedUserForm />
-        <ListUsers />
+        <ListUsers isAdmin={isAdmin} users={users} />
       </div>
     );
   }

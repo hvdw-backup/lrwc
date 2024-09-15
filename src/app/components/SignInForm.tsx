@@ -43,10 +43,6 @@ const SignInForm: FunctionComponent = () => {
           required: "Please enter an email",
         })}
       />
-      <div className="flex w-full">
-        Approved users will receive an email with a link to access the message
-        board
-      </div>
       <button type="submit" className="btn btn-primary self-end w-40">
         Sign In
       </button>

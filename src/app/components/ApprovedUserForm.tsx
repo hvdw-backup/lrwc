@@ -1,11 +1,7 @@
 "use client";
 import { FunctionComponent, useEffect } from "react";
-import { SubmitHandler, useForm } from "react-hook-form";
-import { useRouter } from "next/navigation";
-import axios from "axios";
-import { useMutation } from "@tanstack/react-query";
+import { useForm } from "react-hook-form";
 import { FormApprovedUser } from "../types";
-import email from "next-auth/providers/email";
 import { useFormState } from "react-dom";
 import { ApprovedUserFormState, makeApprovedUser } from "../lib/userActions";
 
@@ -37,7 +33,7 @@ const ApprovedUserForm: FunctionComponent = () => {
       <input
         {...register("email", { required: true })}
         type="text"
-        placeholder="Enter their email - check for typos!"
+        placeholder="Enter email - check for typos!"
         className="input w-full bg-base-200"
       />
       <button type="submit" className="btn btn-primary self-end w-40">
