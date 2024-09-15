@@ -10,7 +10,7 @@ export type SignInForm = {
   email: string;
 };
 
-const SignInForm: FunctionComponent = async () => {
+const SignInForm: FunctionComponent = () => {
   const {
     register,
     formState: { isValid, errors },
