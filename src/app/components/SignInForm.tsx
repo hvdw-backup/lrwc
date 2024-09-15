@@ -2,9 +2,7 @@
 import { FunctionComponent, useEffect, useState } from "react";
 import { SignInFormState, resendLogin } from "../actions";
 import { useForm } from "react-hook-form";
-import { getApprovedUsers } from "../lib/getUsers";
 import { useFormState } from "react-dom";
-import { error } from "console";
 
 export type SignInForm = {
   email: string;

@@ -13,7 +13,7 @@ export const resendLogin = async (
 ): Promise<SignInFormState> => {
   const email = formData.get("email");
 
-  console.log("email", email);
+  console.log("email address", email);
 
   if (email === "" || email === null)
     return {
