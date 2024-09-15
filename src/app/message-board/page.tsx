@@ -3,6 +3,7 @@ import BackButton from "../components/BackButton";
 import PostsContainer from "../components/PostsContainer";
 import { auth } from "@/auth";
 import { redirect } from "next/navigation";
+import { Session } from "next-auth";
 
 const MessageBoard = async () => {
   const session = await auth();
@@ -10,6 +11,7 @@ const MessageBoard = async () => {
   if (!session) redirect("/sign-in");
 
   if (session) {
+    console.log(session, "<---session");
     return (
       <main className="container">
         <BackButton />
