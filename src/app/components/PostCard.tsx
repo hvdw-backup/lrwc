@@ -4,7 +4,11 @@ import ButtonAction from "./ButtonAction";
 import WriteReply from "./WriteReply";
 import { User } from "../types";
 import ReplyCard from "./ReplyCard";
-import { isReadyToRead, normaliseTime } from "../lib/getReadTime";
+import {
+  getRemainingHours,
+  isReadyToRead,
+  normaliseTime,
+} from "../lib/getReadTime";
 
 interface PostCardProps {
   post: {
@@ -39,6 +43,19 @@ const PostCard: FunctionComponent<PostCardProps> = ({
 
   const filteredReplies = replies?.filter((reply) => reply.postId === post.id);
   const filteredUser = users?.find((user) => user.id === post.userId);
+
+  const background =
+    "https://img.freepik.com/premium-photo/fog-textured-background_761958-406.jpg";
+
+  const timeRemaining = getRemainingHours(readTime);
+  const opacity = timeRemaining >= 10 ? 1 : `0.${timeRemaining}`;
+
+  const styles = {
+    backgroundImage: "url(" + background + ")",
+    borderRadius: "16px",
+    backgroundSize: "cover",
+    opacity: opacity,
+  };
 
   if (isReadyToRead(readTime)) {
     return (
@@ -86,9 +103,10 @@ const PostCard: FunctionComponent<PostCardProps> = ({
   if (!isReadyToRead(readTime)) {
     return (
       <div className="card w-100 bg-base-300 my-10">
-        <div className="card-body">
+        <div className="card-body" style={timeRemaining > 1 ? styles : {}}>
+          {/* <div className="card-body" style={styles}> */}
           <h2 className="card-title">
-            You can read this post in: {normaliseTime(readTime)} hours
+            You can read this post in {normaliseTime(readTime)} hours
           </h2>
         </div>
       </div>
