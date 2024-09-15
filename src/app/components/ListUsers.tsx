@@ -1,5 +1,5 @@
 import { FunctionComponent } from "react";
-import { getApprovedUsers } from "../lib/getUsers";
+import { getApprovedUsers } from "../lib/userActions";
 
 const ListUsers: FunctionComponent = async () => {
   const users = await getApprovedUsers();

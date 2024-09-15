@@ -1,7 +1,7 @@
 // TODO: make it so things are revealed on the hour
+//2 days in ms
+const UPPER_LIMIT = 172800000;
 
-//4 days in ms
-const UPPER_LIMIT = 345600000;
 const ONE_HOUR_IN_MS = 3600000;
 
 export const getReadTime = () => {

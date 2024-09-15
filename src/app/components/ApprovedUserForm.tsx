@@ -5,38 +5,33 @@ import { useRouter } from "next/navigation";
 import axios from "axios";
 import { useMutation } from "@tanstack/react-query";
 import { FormApprovedUser } from "../types";
+import email from "next-auth/providers/email";
+import { useFormState } from "react-dom";
+import { ApprovedUserFormState, makeApprovedUser } from "../lib/userActions";
 
 const ApprovedUserForm: FunctionComponent = () => {
-  const router = useRouter();
+  const {
+    register,
+    formState: { isValid, errors },
+    setError,
+    reset,
+  } = useForm<FormApprovedUser>();
 
-  const handleCreateApprovedUser: SubmitHandler<FormApprovedUser> = (data) => {
-    createuser(data);
-  };
-
-  const { mutate: createuser, isPending } = useMutation({
-    mutationFn: (approvedUser: FormApprovedUser) => {
-      return axios.post("/api/approved-user/create", approvedUser);
-    },
-    onError: (error) => {
-      console.error(error, "create approved user error");
-    },
-    onSuccess: () => {
-      router.refresh();
-    },
-  });
-
-  const { register, handleSubmit, reset, formState } =
-    useForm<FormApprovedUser>();
+  const [state, formAction] = useFormState<ApprovedUserFormState, FormData>(
+    makeApprovedUser,
+    null
+  );
 
   useEffect(() => {
-    if (formState.isSubmitSuccessful) {
-      reset();
+    if (!state) {
+      return;
     }
-  }, [formState, reset]);
+    setError("email", { message: state.message });
+  }, [state, setError]);
 
   return (
     <form
-      onSubmit={handleSubmit(handleCreateApprovedUser)}
+      action={formAction}
       className="flex flex-col items-center gap-5 my-10 w-1/2"
     >
       <input
@@ -46,12 +41,11 @@ const ApprovedUserForm: FunctionComponent = () => {
         className="input w-full bg-base-200"
       />
       <button type="submit" className="btn btn-primary self-end w-40">
-        {isPending ? (
-          <span className="loading loading-spinner"></span>
-        ) : (
-          "Add to LRWC forum"
-        )}
+        Add to LRWC forum
       </button>
+      <h1 style={{ color: "#dd2d53" }} className="text-xl">
+        {errors.email?.message}
+      </h1>
     </form>
   );
 };

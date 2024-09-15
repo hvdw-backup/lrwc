@@ -3,13 +3,11 @@ import BackButton from "../components/BackButton";
 import PostsContainer from "../components/PostsContainer";
 import { auth } from "@/auth";
 import { redirect } from "next/navigation";
-import UpdateUserDetailsContainer from "../components/UpdateUserDetailsContainer";
-import { useSession } from "next-auth/react";
 
 const MessageBoard = async () => {
   const session = await auth();
 
-  if (!session) redirect("/");
+  if (!session) redirect("/sign-in");
 
   if (session) {
     return (

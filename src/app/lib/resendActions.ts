@@ -1,6 +1,6 @@
 "use server";
 import { signIn, signOut } from "@/auth";
-import { getApprovedUsers } from "./lib/getUsers";
+import { getApprovedUsers } from "./userActions";
 
 export type SignInFormState = {
   status: "success" | "error";
@@ -12,8 +12,6 @@ export const resendLogin = async (
   formData: FormData
 ): Promise<SignInFormState> => {
   const email = formData.get("email");
-
-  console.log("email", email);
 
   if (email === "" || email === null)
     return {

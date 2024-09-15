@@ -2,7 +2,7 @@ import { auth } from "@/auth";
 import SignInForm from "../components/SignInForm";
 import { redirect } from "next/navigation";
 import UpdateUserDetailsContainer from "../components/UpdateUserDetailsContainer";
-import { getUsers } from "../lib/getUsers";
+import { getUsers } from "../lib/userActions";
 
 const UpdateUserDetailsPage = async () => {
   const session = await auth();
