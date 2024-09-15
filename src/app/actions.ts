@@ -1,7 +1,6 @@
 "use server";
 import { signIn, signOut } from "@/auth";
-import { SignInForm } from "../components/SignInForm";
-import { getApprovedUsers } from "./getUsers";
+import { getApprovedUsers } from "./lib/getUsers";
 
 export type SignInFormState = {
   status: "success" | "error";
@@ -16,22 +15,20 @@ export const resendLogin = async (
 
   console.log("email", email);
 
-  if (email === "") {
+  if (email === "" || email === null)
     return {
       status: "error",
       message: "Please enter a valid email",
     };
-  }
 
   const users = await getApprovedUsers();
   const isApproved = users.some((user) => user.email === email);
 
-  if (!isApproved) {
+  if (!isApproved)
     return {
       status: "error",
       message: "This email has not been registered",
     };
-  }
 
   await signIn("resend", formData);
 

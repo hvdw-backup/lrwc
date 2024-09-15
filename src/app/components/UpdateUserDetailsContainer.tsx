@@ -20,7 +20,6 @@ const UpdateUserDetailsContainer: FunctionComponent<
 
   const { mutate: updateUser, isPending } = useMutation({
     mutationFn: (updateUserDetails: User) => {
-      console.log(updateUserDetails, "registerUserDetails");
       return axios.post("/api/user/update-details", updateUserDetails);
     },
     onError: (error) => {

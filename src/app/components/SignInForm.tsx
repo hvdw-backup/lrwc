@@ -1,18 +1,26 @@
 "use client";
 import { FunctionComponent, useEffect, useState } from "react";
-import { SignInFormState, resendLogin } from "../lib/resendActions";
+import { SignInFormState, resendLogin } from "../actions";
 import { useForm } from "react-hook-form";
 import { getApprovedUsers } from "../lib/getUsers";
 import { useFormState } from "react-dom";
+import { error } from "console";
 
 export type SignInForm = {
   email: string;
 };
 
 const SignInForm: FunctionComponent = async () => {
-  const form = useForm<SignInForm>();
-  const { register, handleSubmit, formState } = form;
-  const { errors } = formState;
+  const {
+    register,
+    formState: { isValid, errors },
+    setError,
+    reset,
+  } = useForm<SignInForm>();
+
+  // const form = useForm<SignInForm>();
+  // const { register, handleSubmit, formState } = form;
+  // const { errors } = formState;
 
   // const onSubmit = (data: SignInForm) => {
   //   resendLogin(data);
@@ -22,14 +30,13 @@ const SignInForm: FunctionComponent = async () => {
     resendLogin,
     null
   );
-  const [status, setStatus] = useState("hey :)");
 
   useEffect(() => {
     if (!state) {
       return;
     }
-    setStatus(state.message);
-  }, [state]);
+    setError("email", { message: state.message });
+  }, [state, setError]);
 
   return (
     <form
@@ -64,9 +71,8 @@ const SignInForm: FunctionComponent = async () => {
         Approved users will receive an email with a link to access the message
         board
       </div>
-      <h1>{errors.email?.message}</h1>
-      <p>{status}</p>
-      <p>{JSON.stringify(state)}</p>
+      <h1>error: {errors.email?.message}</h1>
+      <p>state: {JSON.stringify(state)}</p>
       <button type="submit" className="btn btn-primary self-end w-40">
         Sign In
       </button>

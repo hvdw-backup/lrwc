@@ -40,8 +40,6 @@ const PostCard: FunctionComponent<PostCardProps> = ({
   const filteredReplies = replies?.filter((reply) => reply.postId === post.id);
   const filteredUser = users?.find((user) => user.id === post.userId);
 
-  console.log(readTime, "posttime");
-
   if (isReadyToRead(readTime)) {
     return (
       <div className="card w-100 bg-base-300 my-10">

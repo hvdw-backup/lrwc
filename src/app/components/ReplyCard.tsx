@@ -26,8 +26,6 @@ const ReplyCard: FunctionComponent<ReplyCardProps> = ({
 
   const filteredUser = users?.find((user) => user.id === replyUserId);
 
-  console.log(readTime, "read");
-
   if (isReadyToRead(readTime)) {
     return (
       <div className="card w-100 bg-base-300 ml-20 mr-10 card-body p-2">
