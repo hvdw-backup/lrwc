@@ -2,7 +2,7 @@ import { BookX } from "lucide-react";
 import Link from "next/link";
 import SignOutButton from "./SignOutButton";
 
-const Navbar = () => {
+const Navbar = async () => {
   return (
     <div className="navbar bg-base-200">
       <div className="container">
@@ -12,14 +12,12 @@ const Navbar = () => {
           </Link>
         </div>
         <div className="flex">
-          {/* TODO: update user details */}
-          {/* <Link href={"/update-user-details"} className="btn btn-ghost">
-            Update your details
-          </Link> */}
-          <Link href={"/message-board"} className="btn btn-ghost">
-            Message Board
+          <Link href={"/approve-user"} className="btn btn-ghost">
+            Add a user
           </Link>
-          {/* TODO: conditionally render */}
+          <Link href={"/message-board"} className="btn btn-ghost mr-5">
+            Message Board
+          </Link>{" "}
           <SignOutButton />
         </div>
       </div>

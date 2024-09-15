@@ -3,8 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import Navbar from "./components/NavBar";
 import Providers from "./components/Providers";
-import { AuthProvider } from "./components/AuthProvider";
-import { Session } from "next-auth";
+import { auth } from "@/auth";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -15,21 +14,17 @@ const metadata: Metadata = {
 
 export default async function RootLayout({
   children,
-}: // session,
-Readonly<{
+}: Readonly<{
   children: React.ReactNode;
-  // session: Session;
 }>) {
-  // const session = await useSession();
+  const session = await auth();
 
   return (
     <html lang="en" data-theme="dim">
       <body className={inter.className}>
         <Providers>
-          {/* <AuthProvider session={session}> */}
-          <Navbar />
+          {session && <Navbar />}
           <div className="container h-full pt-12">{children}</div>
-          {/* </AuthProvider> */}
         </Providers>
       </body>
     </html>
