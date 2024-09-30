@@ -9,22 +9,17 @@ export type ApprovedUserFormState = {
 } | null;
 
 export const getUsers = async () => {
-  // noStore();
+  noStore();
+  const response = await db.user?.findMany({
+    select: {
+      id: true,
+      email: true,
+      username: true,
+      about: true,
+    },
+  });
 
-  try {
-    const response = await db.user?.findMany({
-      select: {
-        id: true,
-        email: true,
-        username: true,
-        about: true,
-      },
-    });
-
-    return response;
-  } catch (error) {
-    return console.error({ message: error + "delete reply api error" });
-  }
+  return response;
 };
 
 export const getApprovedUsers = async () => {

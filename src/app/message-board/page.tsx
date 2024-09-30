@@ -10,10 +10,6 @@ const MessageBoard = async () => {
 
   if (!session) redirect("/sign-in");
 
-  //@ts-ignore */
-  if (session && session.user.redeemed === false)
-    redirect("/update-user-details");
-
   if (session) {
     return (
       <main className="container">

@@ -12,8 +12,11 @@ const Navbar = async () => {
           </Link>
         </div>
         <div className="flex">
+          <Link href={"/update-user-details"} className="btn btn-ghost">
+            Update profile
+          </Link>
           <Link href={"/approve-user"} className="btn btn-ghost">
-            Add a user
+            Members
           </Link>
           <Link href={"/message-board"} className="btn btn-ghost mr-5">
             Message Board
