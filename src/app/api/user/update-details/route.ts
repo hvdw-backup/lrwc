@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { db } from "../../../../../prisma/db";
+import { signOut } from "@/auth";
 
 export async function POST(request: Request) {
   try {
@@ -14,6 +15,8 @@ export async function POST(request: Request) {
         redeemed: true,
       },
     });
+    await signOut();
+
     return NextResponse.json(user, { status: 200 });
   } catch (error) {
     return NextResponse.json(

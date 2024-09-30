@@ -36,8 +36,8 @@ const UpdateUserDetailsForm: FunctionComponent<
       <input
         {...(register("username"), { required: true })}
         type="text"
-        placeholder={user.username || "Choose your username"}
-        // value={username || ""}
+        placeholder={user.username || "Please choose a username (required)"}
+        value={user.username || ""}
         className="input w-full bg-base-200"
       />
       <textarea
@@ -54,8 +54,9 @@ const UpdateUserDetailsForm: FunctionComponent<
         className="btn btn-primary self-end w-40"
         // disabled={formState.isValid}
       >
-        Update
+        Update details
       </button>
+      Please note you'll be asked to sign in again
     </form>
     // TODO: can add image and description etc
   );
