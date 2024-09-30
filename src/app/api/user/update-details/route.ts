@@ -11,6 +11,7 @@ export async function POST(request: Request) {
       data: {
         username: body.username,
         about: body.about,
+        redeemed: true,
       },
     });
     return NextResponse.json(user, { status: 200 });

@@ -37,6 +37,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         token.id = user.id;
         token.username = user.username;
         token.about = user.about;
+        token.redeemed = user.redeemed;
       }
 
       return token;
@@ -45,6 +46,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       session.user.id = token.id;
       session.user.username = token.username;
       session.user.about = token.about;
+      session.user.redeemed = token.redeemed;
 
       return session;
     },

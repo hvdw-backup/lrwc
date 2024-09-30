@@ -34,7 +34,7 @@ const UpdateUserDetailsForm: FunctionComponent<
         disabled
       />
       <input
-        {...register("username")}
+        {...(register("username"), { required: true })}
         type="text"
         placeholder={user.username || "Choose your username"}
         // value={username || ""}
@@ -42,7 +42,9 @@ const UpdateUserDetailsForm: FunctionComponent<
       />
       <textarea
         {...register("about")}
-        placeholder={user.about || "Tell us a little something about yourself"}
+        placeholder={
+          user.about || "Add your bio or calling card info here (optional)"
+        }
         // value={about || ""}
         className="textarea textarea-lg bg-base-200 w-full h-60"
       />
