@@ -12,7 +12,7 @@ export async function DELETE(request: Request, context: ContextProps) {
   try {
     const { params } = context;
     console.log(params);
-    await db.user.delete({
+    await db.approvedUsers.delete({
       where: {
         id: params.userid,
       },

@@ -17,6 +17,7 @@ export const getUsers = async () => {
         id: true,
         email: true,
         username: true,
+        about: true,
       },
     });
 
@@ -28,7 +29,7 @@ export const getUsers = async () => {
 
 export const getApprovedUsers = async () => {
   noStore();
-  const response = await db.user?.findMany({
+  const response = await db.approvedUsers?.findMany({
     select: {
       id: true,
       email: true,
@@ -59,7 +60,7 @@ export const makeApprovedUser = async (
     };
 
   const approvedUsers = await getApprovedUsers();
-  const userExists = approvedUsers.some((user) => user.email === email);
+  const userExists = approvedUsers?.some((user) => user.email === email);
 
   if (userExists)
     return {
@@ -77,7 +78,7 @@ export const makeApprovedUser = async (
   // }
 
   try {
-    const newUser = await db.user.create({
+    await db.approvedUsers.create({
       data: {
         //@ts-ignore - email definitely exists by this point
         email: email,
@@ -88,6 +89,7 @@ export const makeApprovedUser = async (
       message: `Successfully added user`,
     };
   } catch (error) {
+    console.log(error);
     return {
       status: "error",
       message: "Something went wrong",
