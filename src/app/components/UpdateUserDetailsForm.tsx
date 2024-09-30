@@ -15,8 +15,6 @@ const UpdateUserDetailsForm: FunctionComponent<
   const { register, handleSubmit, reset, formState } = useForm<User>({
     defaultValues: {
       email: user.email,
-      username: user.username || "",
-      about: user.about || "",
     },
   });
 
@@ -47,6 +45,7 @@ const UpdateUserDetailsForm: FunctionComponent<
         className="textarea textarea-lg bg-base-200 w-full h-60"
       />
       {/* {error && <h1>{error.message}</h1>} */}
+      Please note you will have to sign in again to see the changes
       <button
         type="submit"
         className="btn btn-primary self-end w-40"
@@ -54,7 +53,6 @@ const UpdateUserDetailsForm: FunctionComponent<
       >
         Update details
       </button>
-      Please note you will be asked to sign in again
     </form>
     // TODO: can add image and description etc
   );
