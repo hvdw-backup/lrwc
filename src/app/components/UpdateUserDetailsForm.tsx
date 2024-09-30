@@ -1,44 +1,67 @@
-import { FunctionComponent } from "react";
+"use client";
+import { FunctionComponent, useEffect } from "react";
 import { User } from "../types";
-import { SubmitHandler, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
+import { useFormState } from "react-dom";
+import {
+  UpdateUserDetailsFormState,
+  updateDetails,
+} from "../lib/updateUserDetailsActions";
 
 interface UpdateUserDetailsFormProps {
   user: User;
-  handleRegisterUserDetails: SubmitHandler<User>;
-  isEdit?: boolean;
-  isPendingSubmit?: boolean;
 }
 
-const UpdateUserDetailsForm: FunctionComponent<
-  UpdateUserDetailsFormProps
-> = async ({ user, handleRegisterUserDetails, isEdit, isPendingSubmit }) => {
-  const { register, handleSubmit, reset, formState } = useForm<User>({
+const UpdateUserDetailsForm: FunctionComponent<UpdateUserDetailsFormProps> = ({
+  user,
+}) => {
+  const {
+    register,
+    formState: { isValid, errors },
+    setError,
+    reset,
+  } = useForm<User>({
     defaultValues: {
       email: user.email,
     },
   });
 
+  const [state, formAction] = useFormState<
+    UpdateUserDetailsFormState,
+    FormData
+  >(updateDetails, null);
+
+  useEffect(() => {
+    if (!state) {
+      return;
+    }
+    setError("email", { message: state.message });
+  }, [state, setError]);
+
   return (
     <form
-      onSubmit={handleSubmit(handleRegisterUserDetails)}
+      action={formAction}
       className="flex flex-col items-center gap-5 mt-5 w-1/2"
     >
       <input
         {...register("email", { required: true })}
         type="text"
+        id="email"
         placeholder={user.email}
         value={user.email}
         className="input w-full bg-base-200"
         disabled
       />
       <input
-        {...(register("username"), { required: true })}
+        {...register("username", { required: "Please enter a username" })}
         type="text"
-        placeholder={user.username || "Please choose a username (required)"}
+        id="username"
+        placeholder={user.username || "Choose a username"}
         className="input w-full bg-base-200"
       />
       <textarea
         {...register("about")}
+        id="about"
         placeholder={
           user.about || "Add your bio or calling card info here (optional)"
         }
@@ -53,6 +76,9 @@ const UpdateUserDetailsForm: FunctionComponent<
       >
         Update details
       </button>
+      <h1 style={{ color: "#dd2d53" }} className="text-xl">
+        {errors.email?.message}
+      </h1>
     </form>
     // TODO: can add image and description etc
   );

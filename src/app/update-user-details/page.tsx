@@ -1,6 +1,6 @@
 import { auth } from "@/auth";
 import { redirect } from "next/navigation";
-import UpdateUserDetailsContainer from "../components/UpdateUserDetailsContainer";
+import UpdateUserDetailsForm from "../components/UpdateUserDetailsForm";
 
 const UpdateUserDetailsPage = async () => {
   const session = await auth();
@@ -15,7 +15,7 @@ const UpdateUserDetailsPage = async () => {
           Update your profile
         </h1>
         {/* @ts-ignore */}
-        <UpdateUserDetailsContainer user={session.user} />
+        <UpdateUserDetailsForm user={session.user} />
       </div>
     );
   }

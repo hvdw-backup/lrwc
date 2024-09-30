@@ -8,6 +8,17 @@ export type ApprovedUserFormState = {
   message: string;
 } | null;
 
+export const getUserByEmail = async (email: string) => {
+  noStore();
+  const response = await db.user?.findFirst({
+    where: {
+      email: email,
+    },
+  });
+
+  return response;
+};
+
 export const getUsers = async () => {
   noStore();
   const response = await db.user?.findMany({
