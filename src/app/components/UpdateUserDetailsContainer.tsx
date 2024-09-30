@@ -4,7 +4,7 @@ import { User } from "../types";
 import axios from "axios";
 import { SubmitHandler } from "react-hook-form";
 import { useMutation } from "@tanstack/react-query";
-import { redirect, useRouter } from "next/navigation";
+import { redirect } from "next/navigation";
 import UpdateUserDetailsForm from "./UpdateUserDetailsForm";
 
 interface UpdateUserDetailsContainerProps {
