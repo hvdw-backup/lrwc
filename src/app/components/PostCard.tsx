@@ -54,7 +54,7 @@ const PostCard: FunctionComponent<PostCardProps> = ({
     backgroundImage: "url(" + background + ")",
     borderRadius: "16px",
     backgroundSize: "cover",
-    opacity: opacity,
+    // opacity: opacity,
   };
 
   if (isReadyToRead(readTime)) {

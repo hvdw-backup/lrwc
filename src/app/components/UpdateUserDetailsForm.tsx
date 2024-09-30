@@ -20,11 +20,12 @@ const UpdateUserDetailsForm: FunctionComponent<UpdateUserDetailsFormProps> = ({
     formState: { isValid, errors },
     setError,
     reset,
-  } = useForm<User>({
-    defaultValues: {
-      email: user.email,
-    },
-  });
+  } = useForm<User>();
+  // {
+  // defaultValues: {
+  //   email: user.email,
+  // },
+  // }
 
   const [state, formAction] = useFormState<
     UpdateUserDetailsFormState,
@@ -44,13 +45,11 @@ const UpdateUserDetailsForm: FunctionComponent<UpdateUserDetailsFormProps> = ({
       className="flex flex-col items-center gap-5 mt-5 w-1/2"
     >
       <input
-        {...register("email", { required: true })}
+        {...register("email", { required: true, value: user.email })}
         type="text"
         id="email"
         placeholder={user.email}
-        value={user.email}
         className="input w-full bg-base-200"
-        disabled
       />
       <input
         {...register("username", { required: "Please enter a username" })}
