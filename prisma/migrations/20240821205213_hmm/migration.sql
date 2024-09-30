@@ -21,14 +21,6 @@ CREATE TABLE "Reply" (
     CONSTRAINT "Reply_pkey" PRIMARY KEY ("id")
 );
 
--- CreateTable
-CREATE TABLE "ApprovedUsers" (
-    "id" TEXT NOT NULL,
-    "email" VARCHAR(50) NOT NULL,
-    "redeemed" BOOLEAN NOT NULL DEFAULT false,
-
-    CONSTRAINT "ApprovedUsers_pkey" PRIMARY KEY ("id")
-);
 
 -- CreateTable
 CREATE TABLE "User" (

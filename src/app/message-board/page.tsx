@@ -11,7 +11,6 @@ const MessageBoard = async () => {
   if (!session) redirect("/sign-in");
 
   if (session) {
-    console.log(session, "<---session");
     return (
       <main className="container">
         <BackButton />

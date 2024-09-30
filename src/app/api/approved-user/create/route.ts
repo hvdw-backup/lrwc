@@ -4,7 +4,7 @@ import { db } from "../../../../../prisma/db";
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    const user = await db.approvedUsers.create({
+    const user = await db.user.create({
       data: {
         email: body.email,
       },
