@@ -20,7 +20,7 @@ export async function DELETE(request: Request, context: ContextProps) {
     return new Response(null, { status: 204 });
   } catch (error) {
     return NextResponse.json(
-      { message: error + "delete user api error" },
+      { message: error + ": delete user api error" },
       { status: 500 }
     );
   }
