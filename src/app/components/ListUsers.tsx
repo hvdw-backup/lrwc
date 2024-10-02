@@ -72,8 +72,8 @@ const ListUsers: FunctionComponent<ListUsersProps> = ({
       <ul>
         {users?.map((user) => (
           <div key={user.id}>
-            <li className="inline-block m-3">{user.email}</li>
             <li className="inline-block m-3">{user.username}</li>
+            <li className="inline-block m-3">{user.email}</li>
             <li className="inline-block m-3">{user.about}</li>
             <br />
           </div>

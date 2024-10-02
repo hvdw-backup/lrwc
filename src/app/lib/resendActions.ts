@@ -11,7 +11,7 @@ export const resendLogin = async (
   prevState: SignInFormState,
   formData: FormData
 ): Promise<SignInFormState> => {
-  const email = formData.get("email");
+  const email = formData.get("email")?.toString().toLowerCase();
 
   if (email === "" || email === null)
     return {

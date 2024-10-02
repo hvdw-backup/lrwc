@@ -61,7 +61,7 @@ const PostCard: FunctionComponent<PostCardProps> = ({
     return (
       <div className="card w-100 bg-base-300 my-10">
         <div className="card-body">
-          <h2 className="card-title">{title + " by " + filteredUser?.email}</h2>
+          <h2 className="card-title">{title + " | " + filteredUser?.email}</h2>
           <p>{isTruncated ? content.slice(0, MAX_CONTENT_LENGTH) : content}</p>
           <div className="card-actions justify-end">
             {shouldTruncate && (

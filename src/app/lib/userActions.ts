@@ -57,12 +57,12 @@ export const makeApprovedUser = async (
   prevState: ApprovedUserFormState,
   formData: FormData
 ): Promise<ApprovedUserFormState> => {
-  const email = formData.get("email");
+  const email = formData.get("email")?.toString().toLowerCase();
 
   if (email === "" || email === null)
     return {
       status: "error",
-      message: "Please enter a valid email",
+      message: "Please enter an email address",
     };
 
   const approvedUsers = await getApprovedUsers();
@@ -74,14 +74,13 @@ export const makeApprovedUser = async (
       message: "This user already exists",
     };
 
-  //TODO: unsure why regex isn't working
-  // if (email && isValidEmail(email.toString())) {
-  //   console.log(email, "email");
-  //   return {
-  //     status: "error",
-  //     message: "Please enter a valid email address",
-  //   };
-  // }
+  if (email && !isValidEmail(email.toString())) {
+    console.log(email, "email");
+    return {
+      status: "error",
+      message: "Please enter a valid email address",
+    };
+  }
 
   try {
     await db.approvedUsers.create({
