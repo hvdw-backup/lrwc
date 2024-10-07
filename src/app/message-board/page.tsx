@@ -3,7 +3,6 @@ import BackButton from "../components/BackButton";
 import PostsContainer from "../components/PostsContainer";
 import { auth } from "@/auth";
 import { redirect } from "next/navigation";
-import { Session } from "next-auth";
 
 const MessageBoard = async () => {
   const session = await auth();
@@ -21,7 +20,7 @@ const MessageBoard = async () => {
         {/* @ts-ignore */}
         <CreatePost user={session.user} />
         {/* @ts-ignore */}
-        <PostsContainer author={session.user} />
+        <PostsContainer user={session.user} />
       </main>
     );
   }

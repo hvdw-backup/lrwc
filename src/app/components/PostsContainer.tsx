@@ -55,11 +55,11 @@ const getReplies = async () => {
 };
 
 interface PostsContainerProps {
-  author: User;
+  user: User;
 }
 
 const PostsContainer: FunctionComponent<PostsContainerProps> = async ({
-  author,
+  user,
 }) => {
   const posts = await getPosts();
   const replies = await getReplies();
@@ -74,7 +74,7 @@ const PostsContainer: FunctionComponent<PostsContainerProps> = async ({
           //@ts-ignore
           replies={replies}
           users={users}
-          author={author}
+          user={user}
         />
       ))}
     </section>

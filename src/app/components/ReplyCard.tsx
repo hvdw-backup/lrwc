@@ -1,11 +1,12 @@
 "use client";
 import { FunctionComponent, useState } from "react";
-import ButtonAction from "./ButtonAction";
+import DeleteButton from "./DeleteButton";
 import { User } from "../types";
 import { isReadyToRead, normaliseTime } from "../lib/getReadTime";
 
 interface ReplyCardProps {
   id: string;
+  userId: string | null;
   content: string;
   replyUserId: string;
   users?: User[];
@@ -16,6 +17,7 @@ const MAX_CONTENT_LENGTH = 300;
 
 const ReplyCard: FunctionComponent<ReplyCardProps> = ({
   id,
+  userId,
   content,
   replyUserId,
   users,
@@ -41,7 +43,9 @@ const ReplyCard: FunctionComponent<ReplyCardProps> = ({
               {isTruncated ? "Show more" : "Show less"}
             </button>
           )}
-          <ButtonAction postId={id} path="replies" />
+          {userId === replyUserId && (
+            <DeleteButton postId={id} path="replies" />
+          )}
         </div>
         <span className="divider divider-primary" />
       </div>
@@ -52,7 +56,10 @@ const ReplyCard: FunctionComponent<ReplyCardProps> = ({
     return (
       <div className="card w-100 bg-base-300 ml-20 mr-10 card-body p-2">
         <span className="divider divider-primary" />
-        <p>You can read this reply in: {normaliseTime(readTime)} hours</p>
+        <p>
+          This message will be available for everyone to read in{" "}
+          {normaliseTime(readTime)} hours
+        </p>
         <span className="divider divider-primary" />
       </div>
     );

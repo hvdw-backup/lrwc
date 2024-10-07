@@ -11,7 +11,7 @@ interface ButtonActionProps extends HTMLAttributes<HTMLDivElement> {
   hasReplies?: boolean;
 }
 
-const ButtonAction: FunctionComponent<ButtonActionProps> = ({
+const DeleteButton: FunctionComponent<ButtonActionProps> = ({
   postId,
   path,
   hasReplies,
@@ -50,4 +50,4 @@ const ButtonAction: FunctionComponent<ButtonActionProps> = ({
   );
 };
 
-export default ButtonAction;
+export default DeleteButton;

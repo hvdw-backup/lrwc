@@ -1,6 +1,6 @@
 "use client";
 import { FunctionComponent, useState } from "react";
-import ButtonAction from "./ButtonAction";
+import DeleteButton from "./DeleteButton";
 import WriteReply from "./WriteReply";
 import { User } from "../types";
 import ReplyCard from "./ReplyCard";
@@ -26,7 +26,7 @@ interface PostCardProps {
     readTime: string;
   }[];
   users?: User[];
-  author: User;
+  user: User;
 }
 
 const MAX_CONTENT_LENGTH = 300;
@@ -35,9 +35,9 @@ const PostCard: FunctionComponent<PostCardProps> = ({
   post,
   replies,
   users,
-  author,
+  user,
 }) => {
-  const { id, title, content, readTime } = post;
+  const { id, title, content, readTime, userId } = post;
   const shouldTruncate = content.length > MAX_CONTENT_LENGTH;
   const [isTruncated, setIsTruncated] = useState(true);
 
@@ -77,17 +77,20 @@ const PostCard: FunctionComponent<PostCardProps> = ({
               Edit
             </Link> */}
           </div>
-          <ButtonAction
-            postId={id}
-            className="justify-end inline-flex"
-            path="posts"
-            hasReplies={filteredReplies && filteredReplies.length > 0}
-          />
+          {userId === user.id && (
+            <DeleteButton
+              postId={id}
+              className="justify-end inline-flex"
+              path="posts"
+              hasReplies={filteredReplies && filteredReplies.length > 0}
+            />
+          )}
         </div>
 
         {filteredReplies?.map((reply) => (
           <ReplyCard
             key={reply.id}
+            userId={user.id}
             content={reply.content}
             id={reply.id}
             replyUserId={reply.userId}
@@ -95,7 +98,7 @@ const PostCard: FunctionComponent<PostCardProps> = ({
             readTime={reply.readTime}
           />
         ))}
-        <WriteReply parentPostId={id} userId={author?.id} />
+        <WriteReply parentPostId={id} userId={user?.id} />
       </div>
     );
   }
