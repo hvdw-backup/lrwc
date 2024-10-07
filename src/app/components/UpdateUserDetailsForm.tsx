@@ -40,10 +40,7 @@ const UpdateUserDetailsForm: FunctionComponent<UpdateUserDetailsFormProps> = ({
   }, [state, setError]);
 
   return (
-    <form
-      action={formAction}
-      className="flex flex-col items-center gap-5 mt-5 w-1/2"
-    >
+    <form action={formAction} className="flex flex-col items-center gap-5 mt-5">
       <input
         {...register("email", { required: true, value: user.email })}
         type="text"
