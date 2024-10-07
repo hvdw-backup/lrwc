@@ -42,6 +42,21 @@ const ListUsers: FunctionComponent<ListUsersProps> = ({
     },
   });
 
+  const allUsers = [...users];
+
+  const userEmailsSet = new Set(users.map((user) => user.email));
+
+  approvedUsers.forEach((approvedUser) => {
+    if (!userEmailsSet.has(approvedUser.email)) {
+      allUsers.push({
+        id: approvedUser.id,
+        email: approvedUser.email,
+        username: null,
+        about: null,
+      });
+    }
+  });
+
   return (
     <div className="container">
       {isAdmin && (
@@ -70,11 +85,11 @@ const ListUsers: FunctionComponent<ListUsersProps> = ({
       )}
       <h3 className="text-2xl my-4 font-bold text-center">Members</h3>
       <ul>
-        {users?.map((user) => (
+        {allUsers?.map((user) => (
           <div key={user.id}>
-            <li className="inline-block m-3">{user.username}</li>
+            <li className="inline-block m-3">{user?.username}</li>
             <li className="inline-block m-3">{user.email}</li>
-            <li className="inline-block m-3">{user.about}</li>
+            <li className="inline-block m-3">{user?.about}</li>
             <br />
           </div>
         ))}
