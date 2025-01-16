@@ -1,13 +1,15 @@
 import { NextResponse } from "next/server";
 import { db } from "../../../../../prisma/db";
 
+//TODO: context used to be type: ContextProps, updates to next changed this
+
 interface ContextProps {
   params: {
     replyid: string;
   };
 }
 
-export async function DELETE(request: Request, context: ContextProps) {
+export async function DELETE(request: Request, context: any) {
   try {
     const { params } = context;
     await db.reply.delete({
@@ -24,7 +26,7 @@ export async function DELETE(request: Request, context: ContextProps) {
   }
 }
 
-export async function PATCH(request: Request, context: ContextProps) {
+export async function PATCH(request: Request, context: any) {
   try {
     const { params } = context;
     const body = await request.json();
@@ -49,7 +51,7 @@ export async function PATCH(request: Request, context: ContextProps) {
   }
 }
 
-export async function GET(request: Request, context: ContextProps) {
+export async function GET(request: Request, context: any) {
   try {
     const { params } = context;
     const post = await db.reply.findFirst({

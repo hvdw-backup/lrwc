@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { db } from "../../../../../prisma/db";
 
+//TODO: this used to be type for context, stopped  working form next 15
 interface ContextProps {
   params: {
     userid: string;
@@ -8,7 +9,7 @@ interface ContextProps {
 }
 
 //TODO: handle if the user has written things, then what??
-export async function DELETE(request: Request, context: ContextProps) {
+export async function DELETE(request: Request, context: any) {
   try {
     const { params } = context;
     console.log(params);
