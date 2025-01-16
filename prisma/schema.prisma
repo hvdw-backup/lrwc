@@ -22,7 +22,7 @@ model ApprovedUsers {
 model Post {
   id        String   @id @default(cuid())
   title     String   @db.VarChar(225)
-  content   String   @db.VarChar(1000)
+  content   String   @db.VarChar(4000)
   createdAt DateTime @default(now())
   readTime  String   @default("0")
   Reply     Reply[]
@@ -32,7 +32,7 @@ model Post {
 
 model Reply {
   id        String   @id @default(cuid())
-  content   String   @db.VarChar(1000)
+  content   String   @db.VarChar(3000)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   readTime  String   @default("0")
