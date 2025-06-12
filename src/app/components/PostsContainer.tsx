@@ -76,7 +76,7 @@ const PostsContainer: FunctionComponent<PostsContainerProps> = async ({
           //@ts-ignore
           replies={replies}
           users={users}
-          // user={user}
+          user={user}
         />
       ))}
     </section>
