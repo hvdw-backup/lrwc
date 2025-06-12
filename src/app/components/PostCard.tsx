@@ -17,6 +17,7 @@ interface PostCardProps {
     content: string;
     userId: string | null;
     readTime: string;
+    createdAt: Date;
   };
   replies?: {
     id: string;
@@ -24,6 +25,7 @@ interface PostCardProps {
     postId: string;
     userId: string;
     readTime: string;
+    createdAt: Date;
   }[];
   users?: User[];
   user: User;
@@ -37,7 +39,8 @@ const PostCard: FunctionComponent<PostCardProps> = ({
   users,
   user,
 }) => {
-  const { id, title, content, readTime, userId } = post;
+  const { id, title, content, readTime, userId, createdAt } = post;
+  const postDate = new Date(createdAt).toDateString();
   const shouldTruncate = content.length > MAX_CONTENT_LENGTH;
   const [isTruncated, setIsTruncated] = useState(true);
 
@@ -62,6 +65,7 @@ const PostCard: FunctionComponent<PostCardProps> = ({
       <div className="card w-100 bg-base-300 my-10">
         <div className="card-body">
           <h2 className="card-title">{title + " | " + filteredUser?.email}</h2>
+          <h5>{postDate}</h5>
           <p>{isTruncated ? content.slice(0, MAX_CONTENT_LENGTH) : content}</p>
           <div className="card-actions justify-end">
             {shouldTruncate && (
@@ -96,6 +100,7 @@ const PostCard: FunctionComponent<PostCardProps> = ({
             replyUserId={reply.userId}
             users={users}
             readTime={reply.readTime}
+            createdAt={reply.createdAt}
           />
         ))}
         <WriteReply parentPostId={id} userId={user?.id} />

@@ -27,6 +27,7 @@ const getPosts = async () => {
       content: true,
       userId: true,
       readTime: true,
+      createdAt: true,
     },
     orderBy: {
       createdAt: "desc",
@@ -45,6 +46,7 @@ const getReplies = async () => {
       postId: true,
       userId: true,
       readTime: true,
+      createdAt: true,
     },
     orderBy: {
       createdAt: "asc",
@@ -74,7 +76,7 @@ const PostsContainer: FunctionComponent<PostsContainerProps> = async ({
           //@ts-ignore
           replies={replies}
           users={users}
-          user={user}
+          // user={user}
         />
       ))}
     </section>
