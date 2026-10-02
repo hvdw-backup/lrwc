@@ -2,34 +2,20 @@ import NextAuth, { NextAuthConfig } from "next-auth";
 import Resend from "next-auth/providers/resend";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import { db } from "../prisma/db";
-import nodemailer from "next-auth/providers/nodemailer";
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
   adapter: PrismaAdapter(db),
   providers: [
-    // customise the sign in email : https://authjs.dev/getting-started/providers/resend#customization
+    // TODO: customise the sign in email : https://authjs.dev/getting-started/providers/resend#customization
     Resend({
       apiKey: process.env.AUTH_RESEND_KEY,
       from: "friend@hello.lrwc.co.uk",
     }),
-
-    // nodemailer({
-    //   server: {`
-    //     host: process.env.EMAIL_SERVER_HOST,
-    //     port: process.env.EMAIL_SERVER_PORT,
-    //     auth: {
-    //       user: process.env.EMAIL_SERVER_USER,
-    //       pass: process.env.EMAIL_SERVER_PASSWORD,
-    //     },
-    //   },
-    //   from: process.env.EMAIL_FROM,
-    // }),
   ],
   secret: process.env.AUTH_SECRET,
   session: {
     strategy: "jwt",
-    // One month in seconds
-    maxAge: 2629746,
+    maxAge: 2629746, // One month in seconds
   },
   callbacks: {
     async jwt({ token, user }: any) {

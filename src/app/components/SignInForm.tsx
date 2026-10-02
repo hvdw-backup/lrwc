@@ -11,14 +11,14 @@ export type SignInForm = {
 const SignInForm: FunctionComponent = () => {
   const {
     register,
-    formState: { isValid, errors },
+    formState: { isValid, errors, isLoading },
     setError,
     reset,
   } = useForm<SignInForm>();
 
   const [state, formAction] = useFormState<SignInFormState, FormData>(
     resendLogin,
-    null
+    null,
   );
 
   useEffect(() => {
@@ -43,9 +43,13 @@ const SignInForm: FunctionComponent = () => {
           required: "Please enter an email",
         })}
       />
-      <button type="submit" className="btn btn-primary self-end w-40">
-        Sign In
-      </button>
+      {isLoading ? (
+        <p>LOADING...</p>
+      ) : (
+        <button type="submit" className="btn btn-primary self-end w-40">
+          Sign In
+        </button>
+      )}
       <h1 style={{ color: "#dd2d53" }} className="text-xl">
         {errors.email?.message}
       </h1>
