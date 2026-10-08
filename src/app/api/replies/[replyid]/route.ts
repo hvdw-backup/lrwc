@@ -1,39 +1,37 @@
 import { NextResponse } from "next/server";
 import { db } from "../../../../../prisma/db";
 
-//TODO: context used to be type: ContextProps, updates to next changed this
-
 interface ContextProps {
-  params: {
+  params: Promise<{
     replyid: string;
-  };
+  }>;
 }
 
-export async function DELETE(request: Request, context: any) {
+export async function DELETE(request: Request, context: ContextProps) {
   try {
-    const { params } = context;
+    const { replyid } = await context.params;
     await db.reply.delete({
       where: {
-        id: params.replyid,
+        id: replyid,
       },
     });
     return new Response(null, { status: 204 });
   } catch (error) {
     return NextResponse.json(
       { message: error + "delete reply api error" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
 
-export async function PATCH(request: Request, context: any) {
+export async function PATCH(request: Request, context: ContextProps) {
   try {
-    const { params } = context;
+    const { replyid } = await context.params;
     const body = await request.json();
 
     await db.reply.update({
       where: {
-        id: params.replyid,
+        id: replyid,
       },
       data: {
         content: body.content,
@@ -41,29 +39,29 @@ export async function PATCH(request: Request, context: any) {
     });
     return NextResponse.json(
       { message: "updated successfully" },
-      { status: 200 }
+      { status: 200 },
     );
   } catch (error) {
     return NextResponse.json(
       { message: error + "update reply api error" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
 
-export async function GET(request: Request, context: any) {
+export async function GET(request: Request, context: ContextProps) {
   try {
-    const { params } = context;
+    const { replyid } = await context.params;
     const post = await db.reply.findFirst({
       where: {
-        id: params.replyid,
+        id: replyid,
       },
     });
     return NextResponse.json(post, { status: 200 });
   } catch (error) {
     return NextResponse.json(
       { message: "Could not update reply" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

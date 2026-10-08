@@ -2,7 +2,7 @@
 import { FunctionComponent, useState } from "react";
 import DeleteButton from "./DeleteButton";
 import { User } from "../types";
-import { isReadyToRead, normaliseTime } from "../lib/getReadTime";
+import { isReadyToRead, normaliseTime } from "../lib/timeHelpers";
 
 interface ReplyCardProps {
   id: string;

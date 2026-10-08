@@ -15,7 +15,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
   secret: process.env.AUTH_SECRET,
   session: {
     strategy: "jwt",
-    maxAge: 2629746, // One month in seconds
+    maxAge: 7889238, // Three months in seconds
   },
   callbacks: {
     async jwt({ token, user }: any) {

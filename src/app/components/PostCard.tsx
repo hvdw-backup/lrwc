@@ -8,7 +8,7 @@ import {
   getRemainingHours,
   isReadyToRead,
   normaliseTime,
-} from "../lib/getReadTime";
+} from "../lib/timeHelpers";
 
 interface PostCardProps {
   post: {

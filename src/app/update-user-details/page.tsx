@@ -7,13 +7,13 @@ const UpdateUserDetailsPage = async () => {
 
   if (!session) redirect("/sign-in");
 
-  //@ts-ignore - need to find out how to update the expected Session types
   if (session) {
     return (
       <div className="flex flex-col items-center">
         <h1 className="text-3xl my-10 font-bold text-center">
           Update your profile
         </h1>
+        {/* TODO: proper typing */}
         {/* @ts-ignore */}
         <UpdateUserDetailsForm user={session.user} />
       </div>

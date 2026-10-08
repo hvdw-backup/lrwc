@@ -1,58 +1,48 @@
 "use client";
-import { FunctionComponent, useEffect } from "react";
-import { SignInFormState, resendLogin } from "../lib/resendActions";
-import { useForm } from "react-hook-form";
-import { useFormState } from "react-dom";
 
-export type SignInForm = {
-  email: string;
-};
+import { useActionState, useState } from "react";
+import { resendLogin, type SignInFormState } from "../lib/resendActions";
 
-const SignInForm: FunctionComponent = () => {
-  const {
-    register,
-    formState: { isValid, errors, isLoading },
-    setError,
-    reset,
-  } = useForm<SignInForm>();
-
-  const [state, formAction] = useFormState<SignInFormState, FormData>(
-    resendLogin,
-    null,
-  );
-
-  useEffect(() => {
-    if (!state) {
-      return;
-    }
-    setError("email", { message: state.message });
-  }, [state, setError]);
+// TODO: can't the form use the regex for email?
+const SignInForm = () => {
+  const [state, formAction, isPending] = useActionState<
+    SignInFormState,
+    FormData
+  >(resendLogin, null);
+  const [email, setEmail] = useState("");
+  const errorMessage = state?.email === email ? state.message : null;
 
   return (
     <form
       action={formAction}
       className="flex flex-col items-center gap-5 mt-5 w-1/2"
-      noValidate
     >
       <input
         type="email"
         id="email"
+        name="email"
+        value={email}
+        onChange={(event) => setEmail(event.target.value)}
         placeholder="Enter your email"
+        autoComplete="email"
+        required
+        aria-invalid={Boolean(errorMessage)}
+        aria-describedby={errorMessage ? "email-error" : undefined}
         className="input w-full bg-base-200"
-        {...register("email", {
-          required: "Please enter an email",
-        })}
       />
-      {isLoading ? (
-        <p>LOADING...</p>
-      ) : (
-        <button type="submit" className="btn btn-primary self-end w-40">
-          Sign In
-        </button>
+      {/* TODO: highlight colour */}
+      <button
+        type="submit"
+        className="btn btn-primary self-end w-40"
+        disabled={isPending} //TODO: disable if form is empty
+      >
+        {isPending ? "Sending..." : "Sign In"}
+      </button>
+      {errorMessage && (
+        <p id="email-error" role="alert" className="text-xl text-[#dd2d53]">
+          {errorMessage}
+        </p>
       )}
-      <h1 style={{ color: "#dd2d53" }} className="text-xl">
-        {errors.email?.message}
-      </h1>
     </form>
   );
 };

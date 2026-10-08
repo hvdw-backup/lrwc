@@ -3,6 +3,9 @@ import { signIn, signOut } from "@/auth";
 import { getApprovedUsers, getUserByEmail } from "./userActions";
 import { db } from "../../../prisma/db";
 
+// TODO: is there something more elegant than 'resaving' the old details?
+// TODO: users shouldn't have to sign it again to see changes. How to refresh?
+
 export type UpdateUserDetailsFormState = {
   status: "success" | "error";
   message: string;
@@ -10,7 +13,7 @@ export type UpdateUserDetailsFormState = {
 
 export const updateDetails = async (
   prevState: UpdateUserDetailsFormState,
-  formData: FormData
+  formData: FormData,
 ): Promise<UpdateUserDetailsFormState> => {
   const email = formData.get("email")?.toString();
   const username = formData.get("username")?.toString();
@@ -29,15 +32,15 @@ export const updateDetails = async (
 
   if (username) {
     sendUsername = username;
-    //if there are details on the db and the new entry is empty, store this
-  } else if (storedDetails && storedDetails.username && !username) {
+    //if there are details on the db and the new entry is empty, store the old one
+  } else if (storedDetails && storedDetails.username) {
     sendUsername = storedDetails.username;
   }
 
   if (about) {
     sendAbout = about;
-    //if there are details on the db and the new entry is empty, store this
-  } else if (storedDetails && storedDetails.about && !about) {
+    //if there are details on the db and the new entry is empty, store the old one
+  } else if (storedDetails && storedDetails.about) {
     sendAbout = storedDetails.about;
   }
 

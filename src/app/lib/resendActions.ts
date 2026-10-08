@@ -1,39 +1,43 @@
 "use server";
 import { signIn, signOut } from "@/auth";
 import { getApprovedUsers } from "./userActions";
+import { z } from "zod";
 
 export type SignInFormState = {
-  status: "success" | "error";
+  email: string;
   message: string;
 } | null;
 
-export const resendLogin = async (
-  prevState: SignInFormState,
-  formData: FormData
-): Promise<SignInFormState> => {
-  const email = formData.get("email")?.toString().toLowerCase();
+const emailSchema = z.string().trim().email();
 
-  if (email === "" || email === null)
+export const resendLogin = async (
+  _previousState: SignInFormState,
+  formData: FormData,
+): Promise<SignInFormState> => {
+  const rawEmail = formData.get("email");
+  const submittedEmail = typeof rawEmail === "string" ? rawEmail : "";
+  const result = emailSchema.safeParse(submittedEmail);
+
+  if (!result.success)
     return {
-      status: "error",
+      email: submittedEmail,
       message: "Please enter a valid email",
     };
 
+  const email = result.data.toLowerCase();
   const users = await getApprovedUsers();
-  const isApproved = users.some((user) => user.email === email);
+  const isApproved = users.some((user) => user.email.toLowerCase() === email);
 
   if (!isApproved)
     return {
-      status: "error",
+      email: submittedEmail,
       message: "This email has not been registered",
     };
 
+  formData.set("email", email);
   await signIn("resend", formData);
 
-  return {
-    status: "success",
-    message: `Welcome, ${formData.get("email")}`,
-  };
+  return null;
 };
 
 export const resendSignOut = async () =>

@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { db } from "../../../../../prisma/db";
-import { getReadTime } from "@/app/lib/getReadTime";
+import { getReadTime } from "@/app/lib/timeHelpers";
 
 export async function POST(request: Request) {
   try {
@@ -19,7 +19,7 @@ export async function POST(request: Request) {
   } catch (error) {
     return NextResponse.json(
       { message: error + "create post api error" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

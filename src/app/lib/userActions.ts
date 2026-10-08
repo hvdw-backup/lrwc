@@ -1,7 +1,7 @@
-// import { unstable_noStore as noStore } from "next/cache";
 "use server";
 import { db } from "../../../prisma/db";
 import { unstable_noStore as noStore } from "next/cache";
+import { isValidEmail } from "./helpers";
 
 export type ApprovedUserFormState = {
   status: "success" | "error";
@@ -45,17 +45,9 @@ export const getApprovedUsers = async () => {
   return response;
 };
 
-const isValidEmail = (email: string) => {
-  const regex = new RegExp(
-    /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-  );
-
-  return regex.test(String(email).toLowerCase());
-};
-
 export const makeApprovedUser = async (
   prevState: ApprovedUserFormState,
-  formData: FormData
+  formData: FormData,
 ): Promise<ApprovedUserFormState> => {
   const email = formData.get("email")?.toString().toLowerCase();
 

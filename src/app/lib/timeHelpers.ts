@@ -1,6 +1,6 @@
-// TODO: make it so things are revealed on the hour
-//2 days in ms
-const UPPER_LIMIT = 172800000;
+// TODO: make it so posts are revealed on the hour
+
+const UPPER_LIMIT = 172800000; // 2 days in ms
 const ONE_HOUR_IN_MS = 3600000;
 
 export const getReadTime = () => {
@@ -22,13 +22,14 @@ export const isReadyToRead = (storedTimestamp: string) => {
   const now = new Date();
   const futureDate = new Date(Number(storedTimestamp));
 
-  return futureDate > now ? false : true;
+  return now <= futureDate ? true : false;
 };
 
 export const getRemainingHours = (storedTimestamp: string) => {
   const now = new Date();
   const futureDate = new Date(Number(storedTimestamp));
 
+  //TODO:
   //@ts-ignore
   const diffInMs = futureDate - now;
   const diffInHours = diffInMs / (1000 * 60 * 60);
