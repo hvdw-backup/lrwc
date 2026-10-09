@@ -1,13 +1,13 @@
 export type FormInputPost = {
   title: string;
   content: string;
-  userId: string;
+  userId?: string;
 };
 
 export type FormInputReply = {
   content: string;
   postId: string;
-  userId: string;
+  userId?: string;
 };
 
 export type FormApprovedUser = {

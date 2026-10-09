@@ -61,16 +61,16 @@ describe("normaliseTime", () => {
 });
 
 describe("isReadyToRead", () => {
-  it("returns true when the stored timestamp is in the future", () => {
-    expect(isReadyToRead(String(NOW + 1))).toBe(true);
+  it("returns false when the stored timestamp is in the future", () => {
+    expect(isReadyToRead(String(NOW + 1))).toBe(false);
   });
 
   it("returns true when the stored timestamp equals now", () => {
     expect(isReadyToRead(String(NOW))).toBe(true);
   });
 
-  it("returns false when the stored timestamp has passed", () => {
-    expect(isReadyToRead(String(NOW - 1))).toBe(false);
+  it("returns true when the stored timestamp has passed", () => {
+    expect(isReadyToRead(String(NOW - 1))).toBe(true);
   });
 });
 

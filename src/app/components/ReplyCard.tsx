@@ -31,31 +31,6 @@ const ReplyCard: FunctionComponent<ReplyCardProps> = ({
 
   const filteredUser = users?.find((user) => user.id === replyUserId);
 
-  if (isReadyToRead(readTime)) {
-    return (
-      <div className="card w-100 bg-base-300 ml-20 mr-10 card-body p-2">
-        <span className="divider divider-primary" />
-        <p>{filteredUser?.email}</p>
-        <p>{replyDate}</p>
-        <p>{isTruncated ? content.slice(0, MAX_CONTENT_LENGTH) : content}</p>
-        <div className="card-actions justify-end">
-          {shouldTruncate && (
-            <button
-              onClick={() => setIsTruncated(!isTruncated)}
-              className="hover:underline mr-3 self-end"
-            >
-              {isTruncated ? "Show more" : "Show less"}
-            </button>
-          )}
-          {userId === replyUserId && (
-            <DeleteButton postId={id} path="replies" />
-          )}
-        </div>
-        <span className="divider divider-primary" />
-      </div>
-    );
-  }
-
   if (!isReadyToRead(readTime)) {
     return (
       <div className="card w-100 bg-base-300 ml-20 mr-10 card-body p-2">
@@ -68,6 +43,29 @@ const ReplyCard: FunctionComponent<ReplyCardProps> = ({
       </div>
     );
   }
+
+  return (
+    <div className="card w-100 bg-base-300 ml-20 mr-10 card-body p-2">
+      <span className="divider divider-primary" />
+      <p>{filteredUser?.email}</p>
+      <p>{replyDate}</p>
+      <p>{isTruncated ? content.slice(0, MAX_CONTENT_LENGTH) : content}</p>
+      <div className="card-actions justify-end">
+        {shouldTruncate && (
+          <button
+            onClick={() => setIsTruncated(!isTruncated)}
+            className="hover:underline mr-3 self-end"
+          >
+            {isTruncated ? "Show more" : "Show less"}
+          </button>
+        )}
+        {userId === replyUserId && (
+          <DeleteButton postId={id} path="replies" />
+        )}
+      </div>
+      <span className="divider divider-primary" />
+    </div>
+  );
 };
 
 export default ReplyCard;

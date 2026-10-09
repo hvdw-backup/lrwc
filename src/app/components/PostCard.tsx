@@ -60,59 +60,10 @@ const PostCard: FunctionComponent<PostCardProps> = ({
     // opacity: opacity,
   };
 
-  if (isReadyToRead(readTime)) {
-    return (
-      <div className="card w-100 bg-base-300 my-10">
-        <div className="card-body">
-          <h2 className="card-title">{title + " | " + filteredUser?.email}</h2>
-          <h5>{postDate}</h5>
-          <p>{isTruncated ? content.slice(0, MAX_CONTENT_LENGTH) : content}</p>
-          <div className="card-actions justify-end">
-            {shouldTruncate && (
-              <button
-                onClick={() => setIsTruncated(!isTruncated)}
-                className="hover:underline mr-3 self-end"
-              >
-                {isTruncated ? "Show more" : "Show less"}
-              </button>
-            )}
-
-            {/* <Link href={`/edit-post/${id}`} className="hover:underline">
-              Edit
-            </Link> */}
-          </div>
-          {userId === user.id && (
-            <DeleteButton
-              postId={id}
-              className="justify-end inline-flex"
-              path="posts"
-              hasReplies={filteredReplies && filteredReplies.length > 0}
-            />
-          )}
-        </div>
-
-        {filteredReplies?.map((reply) => (
-          <ReplyCard
-            key={reply.id}
-            userId={user.id}
-            content={reply.content}
-            id={reply.id}
-            replyUserId={reply.userId}
-            users={users}
-            readTime={reply.readTime}
-            createdAt={reply.createdAt}
-          />
-        ))}
-        <WriteReply parentPostId={id} userId={user?.id} />
-      </div>
-    );
-  }
-
   if (!isReadyToRead(readTime)) {
     return (
       <div className="card w-100 bg-base-300 my-10">
         <div className="card-body" style={timeRemaining > 1 ? styles : {}}>
-          {/* <div className="card-body" style={styles}> */}
           <h2 className="card-title">
             You can read this post in {normaliseTime(readTime)} hours
           </h2>
@@ -120,6 +71,48 @@ const PostCard: FunctionComponent<PostCardProps> = ({
       </div>
     );
   }
+
+  return (
+    <div className="card w-100 bg-base-300 my-10">
+      <div className="card-body">
+        <h2 className="card-title">{title + " | " + filteredUser?.email}</h2>
+        <h5>{postDate}</h5>
+        <p>{isTruncated ? content.slice(0, MAX_CONTENT_LENGTH) : content}</p>
+        <div className="card-actions justify-end">
+          {shouldTruncate && (
+            <button
+              onClick={() => setIsTruncated(!isTruncated)}
+              className="hover:underline mr-3 self-end"
+            >
+              {isTruncated ? "Show more" : "Show less"}
+            </button>
+          )}
+        </div>
+        {userId === user.id && (
+          <DeleteButton
+            postId={id}
+            className="justify-end inline-flex"
+            path="posts"
+            hasReplies={filteredReplies && filteredReplies.length > 0}
+          />
+        )}
+      </div>
+
+      {filteredReplies?.map((reply) => (
+        <ReplyCard
+          key={reply.id}
+          userId={user.id}
+          content={reply.content}
+          id={reply.id}
+          replyUserId={reply.userId}
+          users={users}
+          readTime={reply.readTime}
+          createdAt={reply.createdAt}
+        />
+      ))}
+      <WriteReply parentPostId={id} />
+    </div>
+  );
 };
 
 export default PostCard;

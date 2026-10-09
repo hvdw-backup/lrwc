@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { auth } from "@/auth";
 import { db } from "../../../../../prisma/db";
 
 interface ContextProps {
@@ -9,12 +10,28 @@ interface ContextProps {
 
 export async function DELETE(request: Request, context: ContextProps) {
   try {
+    const session = await auth();
+
+    if (!session?.user?.id) {
+      return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
+    }
+
     const { replyid } = await context.params;
+    const existingReply = await db.reply.findUnique({
+      where: { id: replyid },
+      select: { userId: true },
+    });
+
+    if (!existingReply || existingReply.userId !== session.user.id) {
+      return NextResponse.json({ message: "Forbidden" }, { status: 403 });
+    }
+
     await db.reply.delete({
       where: {
         id: replyid,
       },
     });
+
     return new Response(null, { status: 204 });
   } catch (error) {
     return NextResponse.json(
@@ -26,7 +43,22 @@ export async function DELETE(request: Request, context: ContextProps) {
 
 export async function PATCH(request: Request, context: ContextProps) {
   try {
+    const session = await auth();
+
+    if (!session?.user?.id) {
+      return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
+    }
+
     const { replyid } = await context.params;
+    const existingReply = await db.reply.findUnique({
+      where: { id: replyid },
+      select: { userId: true },
+    });
+
+    if (!existingReply || existingReply.userId !== session.user.id) {
+      return NextResponse.json({ message: "Forbidden" }, { status: 403 });
+    }
+
     const body = await request.json();
 
     await db.reply.update({
@@ -37,6 +69,7 @@ export async function PATCH(request: Request, context: ContextProps) {
         content: body.content,
       },
     });
+
     return NextResponse.json(
       { message: "updated successfully" },
       { status: 200 },

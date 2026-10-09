@@ -2,20 +2,17 @@
 import { FunctionComponent } from "react";
 import axios from "axios";
 import { useMutation } from "@tanstack/react-query";
-import { FormInputPost, User } from "../types";
+import { FormInputPost } from "../types";
 import { SubmitHandler } from "react-hook-form";
 import PostForm from "./PostForm";
 import { useRouter } from "next/navigation";
 
-interface CreatePostProps {
-  user: User;
-}
+interface CreatePostProps {}
 
-const CreatePost: FunctionComponent<CreatePostProps> = ({ user }) => {
+const CreatePost: FunctionComponent<CreatePostProps> = () => {
   const router = useRouter();
 
   const initialValues = {
-    userId: user.id,
     title: "",
     content: "",
   };

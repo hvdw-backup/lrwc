@@ -7,18 +7,16 @@ import axios from "axios";
 
 interface FormInputReplyProps {
   parentPostId: string;
-  userId: string;
 }
 
 const WriteReply: FunctionComponent<FormInputReplyProps> = ({
   parentPostId,
-  userId,
 }) => {
   const [isReplying, setIsReplying] = useState(false);
   const router = useRouter();
 
   const handleCreateReply: SubmitHandler<FormInputReply> = (data) => {
-    createReply({ ...data, postId: parentPostId, userId: userId });
+    createReply({ ...data, postId: parentPostId });
   };
 
   const { mutate: createReply, isPending } = useMutation({

@@ -19,10 +19,10 @@ export const normaliseTime = (storedTimestamp: string) => {
 };
 
 export const isReadyToRead = (storedTimestamp: string) => {
-  const now = new Date();
-  const futureDate = new Date(Number(storedTimestamp));
+  const now = Date.now();
+  const targetTime = Number(storedTimestamp);
 
-  return now <= futureDate ? true : false;
+  return now >= targetTime;
 };
 
 export const getRemainingHours = (storedTimestamp: string) => {
