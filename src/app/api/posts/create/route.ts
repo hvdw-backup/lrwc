@@ -1,25 +1,21 @@
 import { NextResponse } from "next/server";
-import { auth } from "@/auth";
 import { db } from "../../../../../prisma/db";
 import { getReadTime } from "@/app/lib/timeHelpers";
 import { createPostSchema } from "@/app/lib/validators";
+import { getSessionUserId, parseJsonBody } from "@/app/lib/server";
 
 export async function POST(request: Request) {
   try {
-    const session = await auth();
+    const userId = await getSessionUserId();
 
-    if (!session?.user?.id) {
+    if (!userId) {
       return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
     }
 
-    const body = await request.json();
-    const parsedBody = createPostSchema.safeParse(body);
+    const parsedBody = await parseJsonBody(request, createPostSchema);
 
-    if (!parsedBody.success) {
-      return NextResponse.json(
-        { message: parsedBody.error.issues[0]?.message ?? "Invalid payload" },
-        { status: 400 },
-      );
+    if (parsedBody instanceof NextResponse) {
+      return parsedBody;
     }
 
     const readTime = getReadTime();
@@ -28,7 +24,7 @@ export async function POST(request: Request) {
       data: {
         title: parsedBody.data.title,
         content: parsedBody.data.content,
-        userId: session.user.id,
+        userId,
         readTime: readTime.toString(),
       },
     });

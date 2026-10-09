@@ -9,8 +9,8 @@ export default async function Home() {
       <span className="divider divider-primary my-16" />
 
       <h2 className="text-3xl text-center mb-16">
-        This is a private message board for members of the Love, Rage and Wisdom
-        Crew
+        This is a private message board for members of the LRWC residency
+        programme
       </h2>
       <h2 className="text-3xl text-center mb-20">
         Members can sign in{" "}
@@ -18,12 +18,6 @@ export default async function Home() {
           here
         </Link>
       </h2>
-      {/* <h2 className="text-3xl text-center mb-20">
-        New members can sign up{" "}
-        <Link href={"/sign-up"} className="link link-primary">
-          here
-        </Link>
-      </h2> */}
     </main>
   );
 }

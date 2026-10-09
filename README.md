@@ -2,7 +2,7 @@
 
 A private message board for members of LRWC residency programme. The project is part forum for private communication and part experimental piece of webtech for thinking about what the lowest intervention messaging tech could look like - like a postal letter, messages take up to 48hours to be "delivered" (visible to other users) and there are no notifications services; thereby resisting the norms of fast communication tech and it's addictive/stress experience for users. 
 
-The app prioritises privacy: users sign in with and magic link, so no password has to be stored and minimal personal data is required to use the forum. There is also no hierarchy between users, anyone can add someone new to the forum - like the residency programme itself, users can self-organise.
+The app prioritises privacy: users sign in with and magic link, so no password has to be stored and minimal personal data is required to use the forum. There is also no hierarchy between users, anyone can add someone new to the forum - like the residency programme itself, users can self-organise. The authorization policy reflects this.
 
 ## Technology
 
@@ -108,6 +108,11 @@ The local development database on the original development machine was initially
 - `/message-board` requires a signed-in session.
 - `/approve-user` is the member administration page.
 - `/verify-request` is the custom “check your email” page.
+
+### Access model
+
+This app intentionally does not implement a separate admin/owner hierarchy for everyday forum activity. Authenticated users are treated as peers for creation, editing, and deletion of posts and replies; the server still requires a valid session and rejects malformed request payloads, but it does not distinguish between ordinary members and administrators for the default forum experience.
+
 
 For local email sign-in, provide a Resend key and use an approved email address.
 

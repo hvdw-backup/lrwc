@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
-import { auth } from "@/auth";
 import { db } from "../../../../../prisma/db";
+import { getSessionUserId } from "@/app/lib/server";
 
 interface ContextProps {
   params: Promise<{
@@ -11,9 +11,9 @@ interface ContextProps {
 //TODO: handle case where someone tries to delete an existing user - not allowed (?)
 export async function DELETE(request: Request, context: ContextProps) {
   try {
-    const session = await auth();
+    const userId = await getSessionUserId();
 
-    if (!session?.user?.id) {
+    if (!userId) {
       return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
     }
 

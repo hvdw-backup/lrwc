@@ -1,24 +1,20 @@
 import { NextResponse } from "next/server";
-import { auth } from "@/auth";
 import { db } from "../../../../../prisma/db";
 import { createApprovedUserSchema } from "@/app/lib/validators";
+import { getSessionUserId, parseJsonBody } from "@/app/lib/server";
 
 export async function POST(request: Request) {
   try {
-    const session = await auth();
+    const userId = await getSessionUserId();
 
-    if (!session?.user?.id) {
+    if (!userId) {
       return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
     }
 
-    const body = await request.json();
-    const parsedBody = createApprovedUserSchema.safeParse(body);
+    const parsedBody = await parseJsonBody(request, createApprovedUserSchema);
 
-    if (!parsedBody.success) {
-      return NextResponse.json(
-        { message: parsedBody.error.issues[0]?.message ?? "Invalid payload" },
-        { status: 400 },
-      );
+    if (parsedBody instanceof NextResponse) {
+      return parsedBody;
     }
 
     const user = await db.approvedUsers.create({
