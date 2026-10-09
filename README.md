@@ -1,8 +1,8 @@
 # LRWC Forum
 
-A private message board for members of LRWC residency programme. The project is part forum for private communication and part experimental piece of webtech for thinking about what the lowest intervention messaging tech could look like - like a postal letter, messages take up to 48hours to be "delivered" (visible to other users) and there are no notifications services; thereby resisting the norms of fast communication tech and it's addictive/stress experience for users. 
+A private message board for members of LRWC residency programme. The project is part forum for private communication and part experimental piece of webtech for thinking about what the lowest intervention online messaging could look like - like a letter in the post, messages take up to 48hours to be "delivered" (visible to other users) and there are no notifications services; thereby resisting the norms of fast communication tech and its addictive/stressful experiences for users. 
 
-The app prioritises privacy: users sign in with and magic link, so no password has to be stored and minimal personal data is required to use the forum. There is also no hierarchy between users, anyone can add someone new to the forum - like the residency programme itself, users can self-organise. The authorization policy reflects this.
+The app prioritises privacy: users sign in with a magic link, so no password has to be stored and minimal personal data is required to use the forum. There is also no hierarchy between users, anyone can add someone new to the forum - like the residency programme itself, users can self-organise. The authorization policy reflects this.
 
 ## Technology
 
